@@ -61,4 +61,4 @@ jobs:
       shell: pwsh
     - name: print Path
       run: |
-        echo "********************$env:MSBUILD_PATH********************"
+        echo "********************$MSBUILD_PATH********************"
