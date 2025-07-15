@@ -56,4 +56,9 @@ jobs:
       run: |
         echo "MSBuild Location: $env:MSBUILD_PATH"
         msbuild -version
+
+        echo "********************$env:MSBUILD_PATH********************"
       shell: pwsh
+    - name: print Path
+      run: |
+        echo "********************$env:MSBUILD_PATH********************"
