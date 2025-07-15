@@ -25,6 +25,10 @@ jobs:
         $vstestPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\BuildTools\Common7\IDE\CommonExtensions\Microsoft\TestWindow"
         echo $vstestPath | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
         echo "this vssbuild: $vstestPath"
+    - name: Print MSBuild Path using where
+      run: |
+        where msbuild
+      shell: cmd
         
     # - name: Build and run tests
     #   run: |
