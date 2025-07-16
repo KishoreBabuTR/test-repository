@@ -1,59 +1,90 @@
-name: Copy files to drop
-
+name: AccountingCS
 on:
   workflow_dispatch:
+    inputs:
+      IsReleaseCandidateParm:
+        description: "Potential Release Candidacy"
+        required: true
+        type: choice
+        default:
+        options:
+          - none
+          - interim
+          - production
+      TestLevel:
+        description: "Test Level"
+        required: true
+        type: choice
+        default: Fortified
+        options:
+          - Fortified
+          - Deferred
+          - Deficient
+env:
+    ACS.BranchName: release/2025.2.1
+    ACS.VersionShort: 2025.2.1
+    BuildNumber: 1
+    BuildAlias: $(Release.PrimaryArtifactSourceAlias)
+    BuildToolsRoot: C:\BuildTools
+    SchemaVersionOverride: ''
+    ACS.BaseInstallerVersion: 5.0.0
+    ACS.TestDatabaseVersion: 1.1.0
+    ACS.GenerateSchemaDocumentation: true
+    ACS.RestoreTestDatabases: true
+    ACS.DeleteTestDatabases: true
+    ACS.UploadArtifacts: true
+    IsReleaseCandidateBuild: false
 
 jobs:
-  copy-files:
-    runs-on: windows-latest
+  env_setup:
+    runs-on: ubuntu-latest
+    outputs:
+      env_name: ${{ steps.set_env.outputs.env_name }}
+      env_test: ${{ steps.setenv.outputs.env_test }}
     steps:
+      - name: Set ENV_NAME based on input IsReleaseCandidateParm
+        id: set_env
+        run: |
+          if [[ "${{ github.event.inputs.IsReleaseCandidateParm }}" == "production" ]]; then
+            echo "env_name=true" >> $GITHUB_ENV
+          else
+            echo "env_name=false" >> $GITHUB_ENV
+          fi
+      - name: Set ENV_NAME based on input TestLevel
+        id: setenv
+        run: |
+          if [[ "${{ github.event.inputs.TestLevel }}" == "Fortified" ]]; then
+            echo "env_test=true" >> $GITHUB_ENV
+          else
+            echo "env_test=false" >> $GITHUB_ENV
+          fi
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          path: ./s/primary
+          persist-credentials: true
 
-      - name: Create artifact staging directory
-        run: |
-          mkdir -Force "${{ github.workspace }}\artifact_staging"
-        shell: pwsh
+      - name: checkout auxiliary repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'tr/cs-prof_AccountingCS-aux'
+          ref: 'refs/tags/gh-pr-34'
+          path: ./s/axlry
+          token: ${{ secrets.REPO_TOKEN }}
+          persist-credentials: true
 
-      - name: Copy files to drop
-        shell: pwsh
-        run: |
-          $source = "${{ github.workspace }}\primary"
-          $target = "${{ github.workspace }}\artifact_staging"
-          # Clean target folder if requested
-          if (Test-Path $target) { Remove-Item $target -Recurse -Force }
-          mkdir -Force $target
-
-          # Copy specific files and folders
-          $patterns = @(
-            "AllProjectOutputs",
-            "Configuration",
-            "CS.Accounting.Schema.DatabaseUpdaterUtility",
-            "CronControllerService",
-            "CronWorkerService",
-            "Dlls",
-            "Installation",
-            "Tools",
-            "BuildConfigurationFiles.targets",
-            "buildservertestrun.runsettings",
-            "buildservertestrunB.runsettings",
-            "prepare-nant.cmd",
-            "sbpr.build",
-            "buildlog.compile.xml"
-          )
-          foreach ($pattern in $patterns) {
-            $srcPath = Join-Path $source $pattern
-            if (Test-Path $srcPath) {
-              Copy-Item $srcPath -Destination $target -Recurse -Force
-            }
-          }
-
-          # Copy all .ico files in any Resources folder
-          Get-ChildItem -Path $source -Recurse -Include *.ico | Where-Object { $_.FullName -match "\\Resources\\" } | ForEach-Object {
-            $destDir = Join-Path $target $_.DirectoryName.Substring($source.Length + 1)
-            if (!(Test-Path $destDir)) { mkdir -Force $destDir }
-            Copy-Item $_.FullName -Destination $destDir -Force
-          }
-
-          # Exclude .git folder
-          Remove-Item -Path "$target\.git" -Recurse -Force -ErrorAction SilentlyContinue
+      - name: Checkout Microsoft Premier Extensions
+        uses: actions/checkout@v4
+        with:
+          repository: MicrosoftPremier/VstsExtensions
+          ref: refs/tags/PostBuildCleanup-v4.0.0
+          path: premier-extensions
+          token: ${{ secrets.GITHUB_TOKEN }}
+  build:
+    BuildJob:
+      runs-on: ubuntu-latest
+      #needs: env_setup
+      steps:
+        - name: print statement
+          run: |
+            echo "This is a placeholder for the build job."
