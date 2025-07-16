@@ -1,0 +1,59 @@
+name: Copy files to drop
+
+on:
+  workflow_dispatch:
+
+jobs:
+  copy-files:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create artifact staging directory
+        run: |
+          mkdir -Force "${{ github.workspace }}\artifact_staging"
+        shell: pwsh
+
+      - name: Copy files to drop
+        shell: pwsh
+        run: |
+          $source = "${{ github.workspace }}\primary"
+          $target = "${{ github.workspace }}\artifact_staging"
+          # Clean target folder if requested
+          if (Test-Path $target) { Remove-Item $target -Recurse -Force }
+          mkdir -Force $target
+
+          # Copy specific files and folders
+          $patterns = @(
+            "AllProjectOutputs",
+            "Configuration",
+            "CS.Accounting.Schema.DatabaseUpdaterUtility",
+            "CronControllerService",
+            "CronWorkerService",
+            "Dlls",
+            "Installation",
+            "Tools",
+            "BuildConfigurationFiles.targets",
+            "buildservertestrun.runsettings",
+            "buildservertestrunB.runsettings",
+            "prepare-nant.cmd",
+            "sbpr.build",
+            "buildlog.compile.xml"
+          )
+          foreach ($pattern in $patterns) {
+            $srcPath = Join-Path $source $pattern
+            if (Test-Path $srcPath) {
+              Copy-Item $srcPath -Destination $target -Recurse -Force
+            }
+          }
+
+          # Copy all .ico files in any Resources folder
+          Get-ChildItem -Path $source -Recurse -Include *.ico | Where-Object { $_.FullName -match "\\Resources\\" } | ForEach-Object {
+            $destDir = Join-Path $target $_.DirectoryName.Substring($source.Length + 1)
+            if (!(Test-Path $destDir)) { mkdir -Force $destDir }
+            Copy-Item $_.FullName -Destination $destDir -Force
+          }
+
+          # Exclude .git folder
+          Remove-Item -Path "$target\.git" -Recurse -Force -ErrorAction SilentlyContinue
