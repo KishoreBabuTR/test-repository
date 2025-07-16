@@ -43,6 +43,7 @@ jobs:
       env_test: ${{ steps.setenv.outputs.env_test }}
     steps:
       - name: Set ENV_NAME based on input IsReleaseCandidateParm
+        shell: bash
         id: set_env
         run: |
           if [[ "${{ github.event.inputs.IsReleaseCandidateParm }}" == "production" ]]; then
@@ -51,6 +52,7 @@ jobs:
             echo "env_name=false" >> $GITHUB_ENV
           fi
       - name: Set ENV_NAME based on input TestLevel
+        shell: bash
         id: setenv
         run: |
           if [[ "${{ github.event.inputs.TestLevel }}" == "Fortified" ]]; then
