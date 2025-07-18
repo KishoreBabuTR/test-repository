@@ -1,0 +1,13 @@
+name: build reusable workflow file
+on:
+  workflow_call:
+    inputs:
+      env:
+        required: true
+        type: string
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: print env
+        run: echo "building ${{ input.env}}"

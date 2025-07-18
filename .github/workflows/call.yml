@@ -1,0 +1,8 @@
+name: deploy
+on:
+  workflow_dispatch:
+jobs:
+  call-build:
+    uses: ./.github/workflow/workflow.yml
+    with:
+      env: testtest
