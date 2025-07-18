@@ -1,8 +1,9 @@
 name: VSTest with Build Tools
 
 on:
-  push:
-    branches: [ main ]
+  # push:
+  #   branches: [ main ]
+  workflow_dispatch:
 
 # jobs:
 #   test:
@@ -61,4 +62,7 @@ jobs:
       shell: pwsh
     - name: print Path
       run: |
-        echo "********************$MSBUILD_PATH********************"
+        echo "********************$env:MSBUILD_PATH********************"
+    - name: Invoke NANT
+        run: |
+          "-D:tools.msbuild-exe=$env:MSBUILD_PATH\MSBuild.exe" ` 
