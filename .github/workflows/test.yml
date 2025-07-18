@@ -63,11 +63,4 @@ jobs:
     - name: print Path
       run: |
         echo "********************$env:MSBUILD_PATH********************"
-    - name: Prepare Nant
-        run: .\prepare-nant.cmd
-        working-directory: s/primary
-        shell: cmd
-
-    - name: Invoke NANT
-        run: |
-          .\Tools\nant\bin\NAnt.exe "-D:tools.msbuild-exe=$env:MSBUILD_PATH\MSBuild.exe" 
+ 
