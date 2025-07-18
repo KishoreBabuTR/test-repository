@@ -3,11 +3,6 @@ on:
   workflow_dispatch:
 jobs:
   call-build:
-  steps:
-    - name: print echo values
-      run: |
-        echo "this is testfile"
-    - name: call workflow file
     uses: ./.github/workflows/workflow.yml
     with:
       env: testtest
