@@ -3,6 +3,6 @@ on:
   workflow_dispatch:
 jobs:
   call-build:
-    uses: ./.github/workflows/workflow.yml
+    uses: ./.github/workflows/call.yml
     with:
       env: testtest
