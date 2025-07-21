@@ -1,13 +1,8 @@
-name: build reusable workflow file
+name: deploy
 on:
-  workflow_call:
-    inputs:
-      env:
-        required: true
-        type: string
+  workflow_dispatch:
 jobs:
-  build:
-    runs-on: windows-latest
-    steps:
-      - name: print env
-        run: echo "building ${{ inputs.env}}"
+  call-build:
+    uses: ./.github/workflows/workflow.yml
+    with:
+      env: testtest
