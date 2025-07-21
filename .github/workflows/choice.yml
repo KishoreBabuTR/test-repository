@@ -1,0 +1,32 @@
+name: Choice Input Example
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Select environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - staging
+          - prod
+      test_level:
+        description: 'Test Level'
+        required: false
+        default: 'basic'
+        type: choice
+        options:
+          - basic
+          - extended
+          - exhaustive
+
+jobs:
+  show-inputs:
+    runs-on: windows-latest
+    steps:
+      - name: Show selected choicess
+        run: |
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Test Level: ${{ inputs.test_level }}"
