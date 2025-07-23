@@ -8,4 +8,4 @@ jobs:
   call-build:
     uses: ./.github/workflows/call.yml
     with:
-      envi: {{ env.name}}
+      envi: ${{ env.name}}
