@@ -1,8 +1,11 @@
 name: deploy
 on:
   workflow_dispatch:
+
+env:
+   name: prodstagedev
 jobs:
   call-build:
     uses: ./.github/workflows/call.yml
     with:
-      env: testtest
+      env: {{ env.name}}
