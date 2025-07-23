@@ -2,7 +2,7 @@ name: build reusable workflow file
 on:
   workflow_call:
     inputs:
-      env:
+      envi:
         required: true
         type: string
 jobs:
