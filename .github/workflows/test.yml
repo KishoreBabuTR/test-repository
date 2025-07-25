@@ -66,6 +66,10 @@ jobs:
     steps:
     - name: print values
       run: |
+        $destination = "${{ github.workspace }}\destination"
+        if (!(Test-Path $destination)) {
+          New-Item -ItemType Directory -Path $destination
+        }
         $source = "${{ github.workspace }}\source"
         $destination = "${{ github.workspace }}\destination"
         $files = @("file1.txt", "file2.dll")
