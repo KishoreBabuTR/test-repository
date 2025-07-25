@@ -105,6 +105,16 @@ jobs:
         }
       shell: powershell
 
+    - name: create files in sub directory path
+      run: |
+        $source = "${{ github.workspace }}\source\one\two\three"
+        $files = @("file1-test.onethowthreefoure.txt", "file2.txt", "file3.txt")
+
+        foreach ($file in $files) {
+          New-Item -Path (Join-Path $source $file) -ItemType File
+        }
+      shell: powershell
+
     - name: print files in source directory values
       run: |
         Get-ChildItem -Path ${{ github.workspace }}\source
@@ -135,4 +145,8 @@ jobs:
     - name: print files in dest sub directory values
       run: |
         Get-ChildItem -Path ${{ github.workspace }}\destination\one
+      shell: powershell
+    - name: print files in dest sub directory values
+      run: |
+        Get-ChildItem -Path ${{ github.workspace }}\destination\one\two\three
       shell: powershell
