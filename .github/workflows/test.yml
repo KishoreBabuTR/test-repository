@@ -63,13 +63,15 @@ jobs:
     # - name: print Path
     #   run: |
     #     echo "********************$env:MSBUILD_PATH********************"
-    run: |
-      $source = "${{ github.workspace }}\source"
-      $destination = "${{ github.workspace }}\destination"
-      $files = @("file1.txt", "file2.dll")
-      foreach ($file in $files) {
-        $srcPath = Join-Path $source $file
-        if (Test-Path $srcPath) {
-          Copy-Item $srcPath -Destination $destination -Force
+    steps:
+    - name: print values
+      run: |
+        $source = "${{ github.workspace }}\source"
+        $destination = "${{ github.workspace }}\destination"
+        $files = @("file1.txt", "file2.dll")
+        foreach ($file in $files) {
+          $srcPath = Join-Path $source $file
+          if (Test-Path $srcPath) {
+            Copy-Item $srcPath -Destination $destination -Force
+          }
         }
-      }
