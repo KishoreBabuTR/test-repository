@@ -79,7 +79,7 @@ jobs:
           New-Item -ItemType Directory -Path $source
         }
       shell: powershell
-      
+
     - name: create files in source directory
       run: |
         $source = "${{ github.workspace }}\source"
@@ -114,7 +114,7 @@ jobs:
       run: |
         $source = "${{ github.workspace }}\source"
         $destination = "${{ github.workspace }}\destination"
-        $files = @("one")
+        $files = @("one","file1.txt")
         foreach ($file in $files) {
           $srcPath = Join-Path $source $file
           if (Test-Path $srcPath) {
