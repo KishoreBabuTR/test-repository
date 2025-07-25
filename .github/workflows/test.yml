@@ -1,8 +1,6 @@
 name: VSTest with Build Tools
 
 on:
-  # push:
-  #   branches: [ main ]
   workflow_dispatch:
 
 # jobs:
@@ -75,6 +73,13 @@ jobs:
     - name: create source Directory
       run: |
         $source = "${{ github.workspace }}\source\one"
+        if (!(Test-Path $source)) {
+          New-Item -ItemType Directory -Path $source
+        }
+      shell: powershell
+    - name: create source Directory
+      run: |
+        $source = "${{ github.workspace }}\source\one\two\three"
         if (!(Test-Path $source)) {
           New-Item -ItemType Directory -Path $source
         }
