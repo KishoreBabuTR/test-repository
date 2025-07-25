@@ -117,3 +117,7 @@ jobs:
       run: |
         Get-ChildItem -Path ${{ github.workspace }}\destination
       shell: powershell
+    - name: print files in dest sub directory values
+      run: |
+        Get-ChildItem -Path ${{ github.workspace }}\destination\one
+      shell: powershell
