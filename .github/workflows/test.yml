@@ -133,7 +133,8 @@ jobs:
         foreach ($file in $files) {
           $srcPath = Join-Path $source $file
           if (Test-Path $srcPath) {
-            Copy-Item "\\?\$srcPath" -Destination "\\?\$destination" -Recurse -Force 
+            #Copy-Item "\\?\$srcPath" -Destination "\\?\$destination" -Recurse -Force
+            Copy-Item $srcPath -Destination $destination -Recurse -Force  
           }
         }
       shell: powershell
