@@ -40,27 +40,36 @@ jobs:
   build:
     runs-on: windows-latest
     
-    steps:
-    - uses: actions/checkout@v4
+    # steps:
+    # - uses: actions/checkout@v4
     
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
+    # - name: Setup MSBuild
+    #   uses: microsoft/setup-msbuild@v2
     
-    - name: Print MSBuild Path
-      run: |
-        $msbuildPath = (Get-Command msbuild).Source
-        echo "MSBuild Path: $msbuildPath"
-        echo "MSBUILD_PATH=$msbuildPath" >> $env:GITHUB_ENV
-      shell: pwsh
+    # - name: Print MSBuild Path
+    #   run: |
+    #     $msbuildPath = (Get-Command msbuild).Source
+    #     echo "MSBuild Path: $msbuildPath"
+    #     echo "MSBUILD_PATH=$msbuildPath" >> $env:GITHUB_ENV
+    #   shell: pwsh
     
-    - name: Verify MSBuild
-      run: |
-        echo "MSBuild Location: $env:MSBUILD_PATH"
-        msbuild -version
+    # - name: Verify MSBuild
+    #   run: |
+    #     echo "MSBuild Location: $env:MSBUILD_PATH"
+    #     msbuild -version
 
-        echo "********************$env:MSBUILD_PATH********************"
-      shell: pwsh
-    - name: print Path
-      run: |
-        echo "********************$env:MSBUILD_PATH********************"
- 
+    #     echo "********************$env:MSBUILD_PATH********************"
+    #   shell: pwsh
+    # - name: print Path
+    #   run: |
+    #     echo "********************$env:MSBUILD_PATH********************"
+    run: |
+      $source = "${{ github.workspace }}\source"
+      $destination = "${{ github.workspace }}\destination"
+      $files = @("file1.txt", "file2.dll")
+      foreach ($file in $files) {
+        $srcPath = Join-Path $source $file
+        if (Test-Path $srcPath) {
+          Copy-Item $srcPath -Destination $destination -Force
+        }
+      }
