@@ -95,18 +95,18 @@ jobs:
         Get-ChildItem -Path ${{ github.workspace }}\source
       shell: powershell
 
-    # - name: copy files
-    #   run: |
-    #     $source = "${{ github.workspace }}\source"
-    #     $destination = "${{ github.workspace }}\destination"
-    #     $files = @("file1.txt", "file2.dll")
-    #     foreach ($file in $files) {
-    #       $srcPath = Join-Path $source $file
-    #       if (Test-Path $srcPath) {
-    #         Copy-Item $srcPath -Destination $destination -Force
-    #       }
-    #     }
-    #   shell: powershell
+    - name: copy files
+      run: |
+        $source = "${{ github.workspace }}\source"
+        $destination = "${{ github.workspace }}\destination"
+        $files = @("file1.txt", "file2.txt", "file3.txt")
+        foreach ($file in $files) {
+          $srcPath = Join-Path $source $file
+          if (Test-Path $srcPath) {
+            Copy-Item $srcPath -Destination $destination -Force
+          }
+        }
+      shell: powershell
 
     - name: print files in dest directory values
       run: |
