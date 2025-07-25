@@ -104,11 +104,11 @@ jobs:
       run: |
         $source = "${{ github.workspace }}\source"
         $destination = "${{ github.workspace }}\destination"
-        $files = @("file1.txt", "file2.txt", "file3.txt")
+        $files = @("one")
         foreach ($file in $files) {
           $srcPath = Join-Path $source $file
           if (Test-Path $srcPath) {
-            Copy-Item $srcPath -Destination $destination -Force
+            Copy-Item $srcPath -Destination $destination -Recurse -Force 
           }
         }
       shell: powershell
