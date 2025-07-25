@@ -74,7 +74,7 @@ jobs:
     
     - name: create source Directory
       run: |
-        $source = "${{ github.workspace }}\source"
+        $source = "${{ github.workspace }}\source\one"
         if (!(Test-Path $source)) {
           New-Item -ItemType Directory -Path $source
         }
@@ -82,8 +82,8 @@ jobs:
 
     - name: create files in source directory
       run: |
-        $source = "${{ github.workspace }}\source"
-        $files = @("file1.txt", "file2.txt", "file3.txt")
+        $source = "${{ github.workspace }}\source\one"
+        $files = @("one.txt", "two.txt", "three.txt")
 
         foreach ($file in $files) {
           New-Item -Path (Join-Path $source $file) -ItemType File
@@ -93,6 +93,11 @@ jobs:
     - name: print files in source directory values
       run: |
         Get-ChildItem -Path ${{ github.workspace }}\source
+      shell: powershell
+
+    - name: print files in source in one directory values
+      run: |
+        Get-ChildItem -Path ${{ github.workspace }}\source\one
       shell: powershell
 
     - name: copy files
