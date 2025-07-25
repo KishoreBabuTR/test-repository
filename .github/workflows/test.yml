@@ -75,3 +75,6 @@ jobs:
             Copy-Item $srcPath -Destination $destination -Force
           }
         }
+    - name: find values
+      run: |
+        Get-ChildItem -Path ${{ github.workspace }}\destination
