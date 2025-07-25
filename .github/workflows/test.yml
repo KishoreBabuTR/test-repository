@@ -71,19 +71,42 @@ jobs:
           New-Item -ItemType Directory -Path $destination
         }
       shell: powershell
-      
-    - name: copy files
+    
+    - name: create source Directory
       run: |
         $source = "${{ github.workspace }}\source"
-        $destination = "${{ github.workspace }}\destination"
-        $files = @("file1.txt", "file2.dll")
-        foreach ($file in $files) {
-          $srcPath = Join-Path $source $file
-          if (Test-Path $srcPath) {
-            Copy-Item $srcPath -Destination $destination -Force
-          }
+        if (!(Test-Path $source)) {
+          New-Item -ItemType Directory -Path $source
         }
       shell: powershell
+
+    - name: create files in source directory
+      run: |
+        $source = "${{ github.workspace }}\source"
+        $files = @("file1.txt", "file2.txt", "file3.txt")
+
+        foreach ($file in $files) {
+          New-Item -Path (Join-Path $source $file) -ItemType File
+        }
+      shell: powershell
+
+    - name: print files in source directory values
+      run: |
+        Get-ChildItem -Path ${{ github.workspace }}\source
+      shell: powershell
+
+    # - name: copy files
+    #   run: |
+    #     $source = "${{ github.workspace }}\source"
+    #     $destination = "${{ github.workspace }}\destination"
+    #     $files = @("file1.txt", "file2.dll")
+    #     foreach ($file in $files) {
+    #       $srcPath = Join-Path $source $file
+    #       if (Test-Path $srcPath) {
+    #         Copy-Item $srcPath -Destination $destination -Force
+    #       }
+    #     }
+    #   shell: powershell
 
     - name: print files in dest directory values
       run: |
