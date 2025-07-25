@@ -64,12 +64,16 @@ jobs:
     #   run: |
     #     echo "********************$env:MSBUILD_PATH********************"
     steps:
-    - name: print values
+    - name: create dest Directory
       run: |
         $destination = "${{ github.workspace }}\destination"
         if (!(Test-Path $destination)) {
           New-Item -ItemType Directory -Path $destination
         }
+      shell: powershell
+      
+    - name: copy files
+      run: |
         $source = "${{ github.workspace }}\source"
         $destination = "${{ github.workspace }}\destination"
         $files = @("file1.txt", "file2.dll")
@@ -79,7 +83,9 @@ jobs:
             Copy-Item $srcPath -Destination $destination -Force
           }
         }
+      shell: powershell
+
+    - name: print files in dest directory values
+      run: |
         Get-ChildItem -Path ${{ github.workspace }}\destination
-    # - name: find values
-    #   run: |
-    #     Get-ChildItem -Path ${{ github.workspace }}\destination
+      shell: powershell
