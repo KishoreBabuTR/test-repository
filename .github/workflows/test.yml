@@ -36,7 +36,7 @@ on:
 #     #     # vstest.console.exe YourTestProject\bin\Release\YourTestProject.dll
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: GH05
     
     # steps:
     # - uses: actions/checkout@v4
@@ -62,92 +62,93 @@ jobs:
     #   run: |
     #     echo "********************$env:MSBUILD_PATH********************"
     steps:
-    - name: create dest Directory
-      run: |
-        $destination = "${{ github.workspace }}\destination"
-        if (!(Test-Path $destination)) {
-          New-Item -ItemType Directory -Path $destination
-        }
-      shell: powershell
+    # - name: create dest Directory
+    #   run: |
+    #     $destination = "${{ github.workspace }}\destination"
+    #     if (!(Test-Path $destination)) {
+    #       New-Item -ItemType Directory -Path $destination
+    #     }
+    #   shell: powershell
     
-    - name: create source Directory
-      run: |
-        $source = "${{ github.workspace }}\source\one"
-        if (!(Test-Path $source)) {
-          New-Item -ItemType Directory -Path $source
-        }
-      shell: powershell
-    - name: create source Directory
-      run: |
-        $source = "${{ github.workspace }}\source\one\two\three"
-        if (!(Test-Path $source)) {
-          New-Item -ItemType Directory -Path $source
-        }
-      shell: powershell
+    # - name: create source Directory
+    #   run: |
+    #     $source = "${{ github.workspace }}\source\one"
+    #     if (!(Test-Path $source)) {
+    #       New-Item -ItemType Directory -Path $source
+    #     }
+    #   shell: powershell
+    # - name: create source Directory
+    #   run: |
+    #     $source = "${{ github.workspace }}\source\one\two\three"
+    #     if (!(Test-Path $source)) {
+    #       New-Item -ItemType Directory -Path $source
+    #     }
+    #   shell: powershell
 
-    - name: create files in source directory
-      run: |
-        $source = "${{ github.workspace }}\source"
-        $files = @("file1.txt", "file2.txt", "file3.txt")
+    # - name: create files in source directory
+    #   run: |
+    #     $source = "${{ github.workspace }}\source"
+    #     $files = @("file1.txt", "file2.txt", "file3.txt")
 
-        foreach ($file in $files) {
-          New-Item -Path (Join-Path $source $file) -ItemType File
-        }
-      shell: powershell
+    #     foreach ($file in $files) {
+    #       New-Item -Path (Join-Path $source $file) -ItemType File
+    #     }
+    #   shell: powershell
 
-    - name: create files in source directory
-      run: |
-        $source = "${{ github.workspace }}\source\one"
-        $files = @("one.txt", "two.txt", "three.txt")
+    # - name: create files in source directory
+    #   run: |
+    #     $source = "${{ github.workspace }}\source\one"
+    #     $files = @("one.txt", "two.txt", "three.txt")
 
-        foreach ($file in $files) {
-          New-Item -Path (Join-Path $source $file) -ItemType File
-        }
-      shell: powershell
+    #     foreach ($file in $files) {
+    #       New-Item -Path (Join-Path $source $file) -ItemType File
+    #     }
+    #   shell: powershell
 
-    - name: create files in sub directory path
-      run: |
-        $source = "${{ github.workspace }}\source\one\two\three"
-        $files = @("file1-test.onethowthreefoure.txt", "file2.txt", "file3.txt")
+    # - name: create files in sub directory path
+    #   run: |
+    #     $source = "${{ github.workspace }}\source\one\two\three"
+    #     $files = @("file1-test.onethowthreefoure.txt", "file2.txt", "file3.txt")
 
-        foreach ($file in $files) {
-          New-Item -Path (Join-Path $source $file) -ItemType File
-        }
-      shell: powershell
+    #     foreach ($file in $files) {
+    #       New-Item -Path (Join-Path $source $file) -ItemType File
+    #     }
+    #   shell: powershell
 
-    - name: print files in source directory values
-      run: |
-        Get-ChildItem -Path ${{ github.workspace }}\source
-      shell: powershell
+    # - name: print files in source directory values
+    #   run: |
+    #     Get-ChildItem -Path ${{ github.workspace }}\source
+    #   shell: powershell
 
-    - name: print files in source in one directory values
-      run: |
-        Get-ChildItem -Path ${{ github.workspace }}\source\one
-      shell: powershell
+    # - name: print files in source in one directory values
+    #   run: |
+    #     Get-ChildItem -Path ${{ github.workspace }}\source\one
+    #   shell: powershell
 
-    - name: copy files
-      run: |
-        $source = "${{ github.workspace }}\source"
-        $destination = "${{ github.workspace }}\destination"
-        $files = @("one","file1.txt")
-        foreach ($file in $files) {
-          $srcPath = Join-Path $source $file
-          if (Test-Path $srcPath) {
-            #Copy-Item "\\?\$srcPath" -Destination "\\?\$destination" -Recurse -Force
-            Copy-Item $srcPath -Destination $destination -Recurse -Force  
-          }
-        }
-      shell: powershell
+    # - name: copy files
+    #   run: |
+    #     $source = "${{ github.workspace }}\source"
+    #     $destination = "${{ github.workspace }}\destination"
+    #     $files = @("one","file1.txt")
+    #     foreach ($file in $files) {
+    #       $srcPath = Join-Path $source $file
+    #       if (Test-Path $srcPath) {
+    #         #Copy-Item "\\?\$srcPath" -Destination "\\?\$destination" -Recurse -Force
+    #         Copy-Item $srcPath -Destination $destination -Recurse -Force  
+    #       }
+    #     }
+    #   shell: powershell
 
-    - name: print files in dest directory values
-      run: |
-        Get-ChildItem -Path ${{ github.workspace }}\destination
-      shell: powershell
+    # - name: print files in dest directory values
+    #   run: |
+    #     Get-ChildItem -Path ${{ github.workspace }}\destination
+    #   shell: powershell
+    # - name: print files in dest sub directory values
+    #   run: |
+    #     Get-ChildItem -Path ${{ github.workspace }}\destination\one
+    #   shell: powershell
     - name: print files in dest sub directory values
       run: |
-        Get-ChildItem -Path ${{ github.workspace }}\destination\one
-      shell: powershell
-    - name: print files in dest sub directory values
-      run: |
-        Get-ChildItem -Path ${{ github.workspace }}\destination\one\two\three
+        # Get-ChildItem -Path ${{ github.workspace }}\destination\one\two\three
+        Get-ChildItem -Path C:\ACS_AWS\105\CmpldFls
       shell: powershell
