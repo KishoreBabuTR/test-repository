@@ -187,5 +187,5 @@ jobs:
         # env:
         #   ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }} # Set your secret
       run: |
-          jfrog rt dl --flat=true generic-local/000_PV_ANZ/3141.txt ${{ github.workspace }}
+          jfrog rt dl --flat=true generic-local/000_PV_ANZ/3141.txt ${{ github.workspace }}\3141.txt
       shell: powershell
