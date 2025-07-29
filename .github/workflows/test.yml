@@ -189,3 +189,7 @@ jobs:
       run: |
           jfrog rt dl --flat=true generic-local/000_PV_ANZ/3141.txt ${{ github.workspace }}\3141.txt
       shell: powershell
+
+    - name: check file name
+      run: |
+        Get-ChildItem ${{ github.workspace}}
