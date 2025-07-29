@@ -205,7 +205,7 @@ jobs:
         #   }
         #   New-Item -Path $dst -ItemType Directory
         #$folder = "C:\BuildOut\ACS_AWS"
-        $folder = "$env.fold"
+        $folder = "$env:fold"
         $file = "example.txt"
         $path = Join-Path $folder $file
 
