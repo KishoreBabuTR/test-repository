@@ -158,7 +158,7 @@ jobs:
     # downdload artifactories from artifactory
 
     - name: Setup JFrog CLI
-      uses: jfrog/setup-jfrog-cli@v3
+    - uses: jfrog/setup-jfrog-cli@v4
       env:
          JF_URL: ${{ secrets.ARTIFACTORY_URL }}
          JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
