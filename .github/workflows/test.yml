@@ -194,7 +194,14 @@ jobs:
     #   run: |
     #     Get-ChildItem ${{ github.workspace}}
     #*********************************************************************************************
-
+    - name: create dest Directory
+      run: |
+         $dst = C:\BuildOut\ACS_AWS
+          if (Test-Path $dst) {
+            Remove-Item $dst -Recurse -Force
+          }
+          New-Item -Path $dst -ItemType Directory
+      shell: powershell
     - name: disk space
       run : |
         dir C:\BuildOut\ACS_AWS 
