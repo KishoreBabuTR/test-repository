@@ -165,7 +165,7 @@ jobs:
          JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
     - name: JFrog CLI - Configure
       run: |
-        jfrog rt c --interactive=false --url ${{ secrets.ARTIFACTORY_URL }} --user ${{ secrets.ARTIFACTORY_USERNAME }} --password ${{ secrets.ARTIFACTORY_PASSWORD }} --default=true
+        jfrog rt config --interactive=false --url ${{ secrets.ARTIFACTORY_URL }} --user ${{ secrets.ARTIFACTORY_USERNAME }} --password ${{ secrets.ARTIFACTORY_PASSWORD }} --default=true
       shell: powershell
     - name: jfrog rt ping
       run: |
