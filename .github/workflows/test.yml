@@ -36,7 +36,7 @@ on:
 #     #     # vstest.console.exe YourTestProject\bin\Release\YourTestProject.dll
 jobs:
   build:
-    runs-on: GH05
+    runs-on: windows-latest
     
     # steps:
     # - uses: actions/checkout@v4
@@ -147,8 +147,36 @@ jobs:
     #   run: |
     #     Get-ChildItem -Path ${{ github.workspace }}\destination\one
     #   shell: powershell
-    - name: print files in dest sub directory values
+    # - name: print files in dest sub directory values
+    #   run: |
+    #     # Get-ChildItem -Path ${{ github.workspace }}\destination\one\two\three
+    #     Get-ChildItem -Path C:\ACS_AWS\105\CmpldFls
+    #   shell: powershell
+    #********************************************************************************************
+
+
+    # downdload artifactories from artifactory
+
+    - name: Setup JFrog CLI
+      uses: jfrog/setup-jfrog-cli@v3
+      env:
+         JF_URL: ${{ secrets.ARTIFACTORY_URL }}
+         JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+         JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+    - name: JFrog CLI - Configure
       run: |
-        # Get-ChildItem -Path ${{ github.workspace }}\destination\one\two\three
-        Get-ChildItem -Path C:\ACS_AWS\105\CmpldFls
+        jfrog rt c --interactive=false --url ${{ secrets.ARTIFACTORY_URL }} --user ${{ secrets.ARTIFACTORY_USERNAME }} --password ${{ secrets.ARTIFACTORY_PASSWORD }} --default=true
+      shell: powershell
+    - name: jfrog rt ping
+      run: |
+        jfrog rt ping
+      shell: powershell
+
+      # JFrog CLI - Download Base Install Files
+    - name: JFrog CLI - Download Base Install Files
+        # if: ${{ env.ACS_RestoreBaseFiles == 'true' }}
+        # env:
+        #   ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }} # Set your secret
+      run: |
+          jfrog rt dl --flat=true generic-local/000_PV_ANZ/3141.txt ${{ github.workspace }}
       shell: powershell
