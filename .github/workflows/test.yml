@@ -174,7 +174,7 @@ jobs:
 
     - name: JFrog CLI - Configure
       run: |
-        jf rt config --url "${{ secrets.ARTIFACTORY_URL }}" --user "${{ secrets.ARTIFACTORY_USERNAME }}" --password "${{ secrets.ARTIFACTORY_PASSWORD }}" --interactive=false --default=true
+        jf config add my-artifactory-server --url "${{ secrets.ARTIFACTORY_URL }}" --user "${{ secrets.ARTIFACTORY_USERNAME }}" --password "${{ secrets.ARTIFACTORY_PASSWORD }}" --interactive=false --default=true
       shell: pwsh
     - name: jfrog rt ping
       run: |
