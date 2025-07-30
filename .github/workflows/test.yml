@@ -160,18 +160,18 @@ jobs:
 
     #downdload artifactories from artifactory
 
-    - name: Setup JFrog CLI
-      uses: jfrog/setup-jfrog-cli@v4
-      env:
-         JF_URL: ${{ secrets.ARTIFACTORY_URL }}
-         JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
-         JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-    - name: JFrog CLI - Configure
-      run: |
-        jfrog rt config --interactive=false --url ${{ secrets.ARTIFACTORY_URL }} --user ${{ secrets.ARTIFACTORY_USERNAME }} --password ${{ secrets.ARTIFACTORY_PASSWORD }} --default=true
-      shell: powershell
-    - name: Set up JFrog CLI
-      uses: jfrog/setup-jfrog-cli@v3
+    # - name: Setup JFrog CLI
+    #   uses: jfrog/setup-jfrog-cli@v4
+    #   env:
+    #      JF_URL: ${{ secrets.ARTIFACTORY_URL }}
+    #      JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+    #      JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+    # - name: JFrog CLI - Configure
+    #   run: |
+    #     jfrog rt config --interactive=false --url ${{ secrets.ARTIFACTORY_URL }} --user ${{ secrets.ARTIFACTORY_USERNAME }} --password ${{ secrets.ARTIFACTORY_PASSWORD }} --default=true
+    #  shell: powershell
+    # - name: Set up JFrog CLI
+    #   uses: jfrog/setup-jfrog-cli@v3
     - name: Setup JFrog CLI
       uses: jfrog/setup-jfrog-cli@v4
 
