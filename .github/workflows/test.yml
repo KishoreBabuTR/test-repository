@@ -158,65 +158,65 @@ jobs:
     #********************************************************************************************
 
 
-    # downdload artifactories from artifactory
+    #downdload artifactories from artifactory
 
-    # - name: Setup JFrog CLI
-    #   uses: jfrog/setup-jfrog-cli@v4
-    #   env:
-    #      JF_URL: ${{ secrets.ARTIFACTORY_URL }}
-    #      JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
-    #      JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
-    # - name: JFrog CLI - Configure
-    #   run: |
-    #     jfrog rt config --interactive=false --url ${{ secrets.ARTIFACTORY_URL }} --user ${{ secrets.ARTIFACTORY_USERNAME }} --password ${{ secrets.ARTIFACTORY_PASSWORD }} --default=true
-    #   shell: powershell
-    # - name: Set up JFrog CLI
-    #   uses: jfrog/setup-jfrog-cli@v3
-    # - name: Setup JFrog CLI
-    #   uses: jfrog/setup-jfrog-cli@v4
-
-    # - name: JFrog CLI - Configure
-    #   run: |
-    #     jf config add artifactory --url "${{ secrets.ARTIFACTORY_URL }}" --user "${{ secrets.ARTIFACTORY_USERNAME }}" --password "${{ secrets.ARTIFACTORY_PASSWORD }}" --interactive=false
-    #   shell: bash
-    # - name: jfrog rt ping
-    #   run: |
-    #     jfrog rt ping
-    #   shell: powershell
-
-    #   # JFrog CLI - Download Base Install Files
-    # - name: JFrog CLI - Download Base Install Files
-    #     # if: ${{ env.ACS_RestoreBaseFiles == 'true' }}
-    #     # env:
-    #     #   ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }} # Set your secret
-    #   run: |
-    #       jfrog rt dl --flat=true generic-local/000_PV_ANZ/3141.txt "${{ github.workspace }}\"
-    #   shell: powershell
-
-    # - name: check file name
-    #   run: |
-    #     Get-ChildItem ${{ github.workspace}}
-    #*********************************************************************************************
-    - name: create dest Directory
+    - name: Setup JFrog CLI
+      uses: jfrog/setup-jfrog-cli@v4
+      env:
+         JF_URL: ${{ secrets.ARTIFACTORY_URL }}
+         JF_USER: ${{ secrets.ARTIFACTORY_USERNAME }}
+         JF_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }}
+    - name: JFrog CLI - Configure
       run: |
-        #  $dst = "C:\BuildOut\ACS_AWS"
-        #  if (Test-Path $dst) {
-        #    Remove-Item $dst -Recurse -Force
-        #   }
-        #   New-Item -Path $dst -ItemType Directory
-        #$folder = "C:\BuildOut\ACS_AWS"
-        $folder = "$env:fold"
-        $file = "example.txt"
-        $path = Join-Path $folder $file
-
-         # Ensure the folder exists
-        if (!(Test-Path $folder)) {
-         New-Item -Path $folder -ItemType Directory
-        }
-
-        # Create the file
-        New-Item -Path $path -ItemType File -Force
+        jfrog rt config --interactive=false --url ${{ secrets.ARTIFACTORY_URL }} --user ${{ secrets.ARTIFACTORY_USERNAME }} --password ${{ secrets.ARTIFACTORY_PASSWORD }} --default=true
       shell: powershell
-    - name: disk space
-      run : |
-        dir C:\BuildOut\ACS_AWS 
+    - name: Set up JFrog CLI
+      uses: jfrog/setup-jfrog-cli@v3
+    - name: Setup JFrog CLI
+      uses: jfrog/setup-jfrog-cli@v4
+
+    - name: JFrog CLI - Configure
+      run: |
+        jf config add artifactory --url "${{ secrets.ARTIFACTORY_URL }}" --user "${{ secrets.ARTIFACTORY_USERNAME }}" --password "${{ secrets.ARTIFACTORY_PASSWORD }}" --interactive=false --overwrite=true
+      shell: bash
+    - name: jfrog rt ping
+      run: |
+        jfrog rt ping
+      shell: powershell
+
+      # JFrog CLI - Download Base Install Files
+    - name: JFrog CLI - Download Base Install Files
+        # if: ${{ env.ACS_RestoreBaseFiles == 'true' }}
+        # env:
+        #   ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }} # Set your secret
+      run: |
+          jfrog rt dl --flat=true generic-local/accounting-cs-build/base-install-files/BaseInstallFiles.2.0.0.zip "${{ github.workspace }}\"
+      shell: powershell
+
+    - name: check file name
+      run: |
+        Get-ChildItem ${{ github.workspace}}
+    #*********************************************************************************************
+    # - name: create dest Directory
+    #   run: |
+    #     #  $dst = "C:\BuildOut\ACS_AWS"
+    #     #  if (Test-Path $dst) {
+    #     #    Remove-Item $dst -Recurse -Force
+    #     #   }
+    #     #   New-Item -Path $dst -ItemType Directory
+    #     #$folder = "C:\BuildOut\ACS_AWS"
+    #     $folder = "$env:fold"
+    #     $file = "example.txt"
+    #     $path = Join-Path $folder $file
+
+    #      # Ensure the folder exists
+    #     if (!(Test-Path $folder)) {
+    #      New-Item -Path $folder -ItemType Directory
+    #     }
+
+    #     # Create the file
+    #     New-Item -Path $path -ItemType File -Force
+    #   shell: powershell
+    # - name: disk space
+    #   run : |
+    #     dir C:\BuildOut\ACS_AWS 
