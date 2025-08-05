@@ -227,7 +227,9 @@ jobs:
     #     dir C:\BuildOut\ACS_AWS 
     - name: copy file using robocopy
       run: |
-       robocopy "D:\a\test-repository\test-repository\source" "D:\a\test-repository\test-repository\source\one\two\three\four" /E /PURGE /NFL /NDL
+        robocopy "D:\a\test-repository\test-repository\source" "D:\a\test-repository\test-repository\source\one\two\three\four" /E /PURGE /NFL /NDL
+        $exitcode = $LASTEXITCODE
+        if ($exitcode -gt 1) { exit $exitcode }
       shell: powershell
     - name: print files in dest directory values
       run: |
