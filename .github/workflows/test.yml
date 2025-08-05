@@ -227,10 +227,15 @@ jobs:
     #     dir C:\BuildOut\ACS_AWS 
     - name: copy file using robocopy
       run: |
-        robocopy "D:\a\test-repository\test-repository\source" "D:\a\test-repository\test-repository\source\one\two\three\four" /E /PURGE /NFL /NDL
-        $exitcode = $LASTEXITCODE
-        if ($exitcode -gt 1) { exit $exitcode }
-      
+        $source = "D:\a\test-repository\test-repository\source"
+        $dest = "D:\a\test-repository\test-repository\source\one\two\three\four"
+
+        robocopy $source $dest /E /COPYALL /R:3 /W:5
+        $rc = $LASTEXITCODE
+        Write-Host "Robocopy exit code: $rc"
+        if ($rc -ge 8) { throw "Robocopy failed with exit code $rc" }
+        exit 0
+        
     - name: print files in dest directory values
       run: |
         Get-ChildItem -Path ${{ github.workspace }}\source\one\two\three\four
