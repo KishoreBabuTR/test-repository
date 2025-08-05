@@ -88,15 +88,15 @@ jobs:
     #     }
     #   shell: powershell
 
-    # - name: create files in source directory
-    #   run: |
-    #     $source = "${{ github.workspace }}\source"
-    #     $files = @("file1.txt", "file2.txt", "file3.txt")
+    - name: create files in source directory
+      run: |
+        $source = "${{ github.workspace }}\source"
+        $files = @("file1.txt", "file2.txt", "file3.txt")
 
-    #     foreach ($file in $files) {
-    #       New-Item -Path (Join-Path $source $file) -ItemType File
-    #     }
-    #   shell: powershell
+        foreach ($file in $files) {
+          New-Item -Path (Join-Path $source $file) -ItemType File
+        }
+      shell: powershell
 
     # - name: create files in source directory
     #   run: |
@@ -121,7 +121,7 @@ jobs:
     - name: print files in source directory values
       run: |
         Get-ChildItem -Path ${{ github.workspace }}
-        #  Get-ChildItem -Path ${{ github.workspace }}\source
+        Get-ChildItem -Path ${{ github.workspace }}\source
       shell: powershell
 
     # - name: print files in source in one directory values
