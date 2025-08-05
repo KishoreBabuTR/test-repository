@@ -229,7 +229,6 @@ jobs:
     - name: copy file using robocopy
       run: |
         $source = "D:\a\test-repository\test-repository\source\one\two"
-        # $dest = "D:\a\test-repository\test-repository\source\two"
         $dest = "${{ env.DropLocationForSchemaDoc }}"
 
         robocopy $source $dest /E /COPYALL /R:3 /W:5
