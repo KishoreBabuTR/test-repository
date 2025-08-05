@@ -90,7 +90,7 @@ jobs:
 
     - name: create files in source directory
       run: |
-        $source = "${{ github.workspace }}\source"
+        $source = "${{ github.workspace }}\source\one\two"
         $files = @("file1.txt", "file2.txt", "file3.txt")
 
         if (-not (Test-Path $source)) {
@@ -227,8 +227,8 @@ jobs:
     #     dir C:\BuildOut\ACS_AWS 
     - name: copy file using robocopy
       run: |
-        $source = "D:\a\test-repository\test-repository\source"
-        $dest = "D:\a\test-repository\test-repository\source\one\two\three\four"
+        $source = "D:\a\test-repository\test-repository\source\one\two"
+        $dest = "D:\a\test-repository\test-repository\source\two"
 
         robocopy $source $dest /E /COPYALL /R:3 /W:5
         $rc = $LASTEXITCODE
@@ -238,5 +238,6 @@ jobs:
         
     - name: print files in dest directory values
       run: |
-        Get-ChildItem -Path ${{ github.workspace }}\source\one\two\three\four
+        Get-ChildItem -Path ${{ github.workspace }}\source
+        Get-ChildItem -Path ${{ github.workspace }}\source\two
       shell: powershell
