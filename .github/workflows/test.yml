@@ -133,24 +133,24 @@ jobs:
     #     Get-ChildItem -Path ${{ github.workspace }}\source\one
     #   shell: powershell
 
-    # - name: copy files
-    #   run: |
-    #     $source = "${{ github.workspace }}\source"
-    #     $destination = "${{ github.workspace }}\destination"
-    #     $files = @("one","file1.txt")
-    #     foreach ($file in $files) {
-    #       $srcPath = Join-Path $source $file
-    #       if (Test-Path $srcPath) {
-    #         #Copy-Item "\\?\$srcPath" -Destination "\\?\$destination" -Recurse -Force
-    #         Copy-Item $srcPath -Destination $destination -Recurse -Force  
-    #       }
-    #     }
-    #   shell: powershell
+    - name: copy files
+      run: |
+        $source = "${{ github.workspace }}\source"
+        $destination = "${{ github.workspace }}\destination\one\two"
+        $files = @("one","file1.txt")
+        foreach ($file in $files) {
+          $srcPath = Join-Path $source $file
+          if (Test-Path $srcPath) {
+            #Copy-Item "\\?\$srcPath" -Destination "\\?\$destination" -Recurse -Force
+            Copy-Item $srcPath -Destination $destination -Recurse -Force  
+          }
+        }
+      shell: powershell
 
-    # - name: print files in dest directory values
-    #   run: |
-    #     Get-ChildItem -Path ${{ github.workspace }}\destination
-    #   shell: powershell
+    - name: print files in dest directory values
+      run: |
+        Get-ChildItem -Path ${{ github.workspace }}\destination\one\two
+      shell: powershell
     # - name: print files in dest sub directory values
     #   run: |
     #     Get-ChildItem -Path ${{ github.workspace }}\destination\one
