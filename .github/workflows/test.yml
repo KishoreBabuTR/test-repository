@@ -82,8 +82,7 @@ jobs:
     #   shell: powershell
     - name: create source Directory
       run: |
-        # $source = "${{ github.workspace }}\source\one\two\three"
-        $destination = "${{ github.workspace }}\destination\one\two"
+        $source = "${{ github.workspace }}\source\one\two\three"
         if (!(Test-Path $destination)) {
           New-Item -ItemType Directory -Path $source
         }
@@ -137,7 +136,7 @@ jobs:
     - name: copy files
       run: |
         $source = "${{ github.workspace }}\source"
-        $destination = "${{ github.workspace }}\destination\one\two"
+        $destination = "${{ github.workspace }}\source\one\two\three"
         $files = @("one","file1.txt")
         foreach ($file in $files) {
           $srcPath = Join-Path $source $file
@@ -150,7 +149,7 @@ jobs:
 
     - name: print files in dest directory values
       run: |
-        Get-ChildItem -Path ${{ github.workspace }}\destination\one\two
+        Get-ChildItem -Path ${{ github.workspace }}\source\one\two\three
       shell: powershell
     # - name: print files in dest sub directory values
     #   run: |
