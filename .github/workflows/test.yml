@@ -80,13 +80,14 @@ jobs:
     #       New-Item -ItemType Directory -Path $source
     #     }
     #   shell: powershell
-    # - name: create source Directory
-    #   run: |
-    #     $source = "${{ github.workspace }}\source\one\two\three"
-    #     if (!(Test-Path $source)) {
-    #       New-Item -ItemType Directory -Path $source
-    #     }
-    #   shell: powershell
+    - name: create source Directory
+      run: |
+        # $source = "${{ github.workspace }}\source\one\two\three"
+        $destination = "${{ github.workspace }}\destination\one\two"
+        if (!(Test-Path $source)) {
+          New-Item -ItemType Directory -Path $source
+        }
+      shell: powershell
 
     - name: create files in source directory
       run: |
