@@ -65,13 +65,13 @@ jobs:
     #   run: |
     #     echo "********************$env:MSBUILD_PATH********************"
     steps:
-    # - name: create dest Directory
-    #   run: |
-    #     $destination = "${{ github.workspace }}\destination"
-    #     if (!(Test-Path $destination)) {
-    #       New-Item -ItemType Directory -Path $destination
-    #     }
-    #   shell: powershell
+    - name: create dest Directory
+      run: |
+        $destination = "${{ github.workspace }}\destination"
+        if (!(Test-Path $destination)) {
+          New-Item -ItemType Directory -Path $destination
+        }
+      shell: powershell
     
     # - name: create source Directory
     #   run: |
@@ -118,10 +118,11 @@ jobs:
     #     }
     #   shell: powershell
 
-    # - name: print files in source directory values
-    #   run: |
-    #     Get-ChildItem -Path ${{ github.workspace }}\source
-    #   shell: powershell
+    - name: print files in source directory values
+      run: |
+        Get-ChildItem -Path ${{ github.workspace }}
+        #  Get-ChildItem -Path ${{ github.workspace }}\source
+      shell: powershell
 
     # - name: print files in source in one directory values
     #   run: |
@@ -172,30 +173,30 @@ jobs:
     #  shell: powershell
     # - name: Set up JFrog CLI
     #   uses: jfrog/setup-jfrog-cli@v3
-    - name: Setup JFrog CLI
-      uses: jfrog/setup-jfrog-cli@v4
+    # - name: Setup JFrog CLI
+    #   uses: jfrog/setup-jfrog-cli@v4
 
-    - name: JFrog CLI - Configure
-      run: |
-        jf config add artifactory --url "${{ secrets.ARTIFACTORY_URL }}" --user "${{ secrets.ARTIFACTORY_USERNAME }}" --password "${{ secrets.ARTIFACTORY_PASSWORD }}" --interactive=false --overwrite=true
-      shell: bash
-    - name: jfrog rt ping
-      run: |
-        jfrog rt ping
-      shell: powershell
+    # - name: JFrog CLI - Configure
+    #   run: |
+    #     jf config add artifactory --url "${{ secrets.ARTIFACTORY_URL }}" --user "${{ secrets.ARTIFACTORY_USERNAME }}" --password "${{ secrets.ARTIFACTORY_PASSWORD }}" --interactive=false --overwrite=true
+    #   shell: bash
+    # - name: jfrog rt ping
+    #   run: |
+    #     jfrog rt ping
+    #   shell: powershell
 
-      # JFrog CLI - Download Base Install Files
-    - name: JFrog CLI - Download Base Install Files
-        # if: ${{ env.ACS_RestoreBaseFiles == 'true' }}
-        # env:
-        #   ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }} # Set your secret
-      run: |
-          jfrog rt dl --flat=true generic-local/accounting-cs-build/base-install-files/BaseInstallFiles.2.0.0.zip "${{ github.workspace }}\"
-      shell: powershell
+    #   # JFrog CLI - Download Base Install Files
+    # - name: JFrog CLI - Download Base Install Files
+    #     # if: ${{ env.ACS_RestoreBaseFiles == 'true' }}
+    #     # env:
+    #     #   ARTIFACTORY_API_KEY: ${{ secrets.ARTIFACTORY_API_KEY }} # Set your secret
+    #   run: |
+    #       jfrog rt dl --flat=true generic-local/accounting-cs-build/base-install-files/BaseInstallFiles.2.0.0.zip "${{ github.workspace }}\"
+    #   shell: powershell
 
-    - name: check file name
-      run: |
-        Get-ChildItem ${{ github.workspace}}
+    # - name: check file name
+    #   run: |
+    #     Get-ChildItem ${{ github.workspace}}
     #*********************************************************************************************
     # - name: create dest Directory
     #   run: |
