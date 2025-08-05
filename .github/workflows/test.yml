@@ -84,7 +84,7 @@ jobs:
       run: |
         # $source = "${{ github.workspace }}\source\one\two\three"
         $destination = "${{ github.workspace }}\destination\one\two"
-        if (!(Test-Path $source)) {
+        if (!(Test-Path $destination)) {
           New-Item -ItemType Directory -Path $source
         }
       shell: powershell
