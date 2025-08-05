@@ -226,6 +226,14 @@ jobs:
     # - name: disk space
     #   run : |
     #     dir C:\BuildOut\ACS_AWS 
+    - name: Create target directory for SchemaDoc
+        run: |
+          $target = "${{ env.DropLocationForSchemaDoc }}"
+          if (Test-Path $target) {
+            Remove-Item $target -Recurse -Force
+          }
+          New-Item -Path $target -ItemType Directory
+        shell: powershell
     - name: copy file using robocopy
       run: |
         $source = "D:\a\test-repository\test-repository\source\one\two"
