@@ -257,9 +257,9 @@ jobs:
       shell: powershell
     
     - name: Extract zip file
-    shell: pwsh
-    run: |
-      Expand-Archive -Path "${{ github.workspace }}\source\one\test.zip" -DestinationPath "${{ github.workspace }}\source\one\unzipped"
+      shell: pwsh
+      run: |
+        Expand-Archive -Path "${{ github.workspace }}\source\one\test.zip" -DestinationPath "${{ github.workspace }}\source\one\unzipped"
     
     - name: print files in dest directory values
       run: |
