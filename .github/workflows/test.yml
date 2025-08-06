@@ -251,9 +251,13 @@ jobs:
         Write-Host "Robocopy exit code: $rc"
         if ($rc -ge 8) { throw "Robocopy failed with exit code $rc" }
         exit 0
-        
+    - name: zip files
+      run: |
+        Compress-Archive -Path "${{ github.workspace }}\source\two\*" -DestinationPath "${{ github.workspace }}\source\one\test.zip"
+      shell: powershell
     - name: print files in dest directory values
       run: |
         Get-ChildItem -Path ${{ github.workspace }}\source
+        Get-ChildItem -Path ${{ github.workspace }}\source\one
         Get-ChildItem -Path ${{ github.workspace }}\source\two
       shell: powershell
