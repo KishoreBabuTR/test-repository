@@ -266,4 +266,5 @@ jobs:
         Get-ChildItem -Path ${{ github.workspace }}\source
         Get-ChildItem -Path ${{ github.workspace }}\source\one
         Get-ChildItem -Path ${{ github.workspace }}\source\two
+        Get-ChildItem -Path ${{ github.workspace }}\source\one\unzipped
       shell: powershell
