@@ -1,4 +1,4 @@
-name: deploy
+name: Main workflow
 on:
   workflow_dispatch:
 
@@ -6,6 +6,6 @@ env:
    name: prodstagedevg
 jobs:
   call-build:
-    uses: ./.github/workflows/call.yml
+    uses: ./.github/workflows/reusable-build.yml
     with:
       envi: ${{ env.name}}

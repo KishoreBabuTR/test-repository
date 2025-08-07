@@ -1,4 +1,4 @@
-name: build reusable workflow file
+name: reusable build
 on:
   workflow_call:
     inputs:
