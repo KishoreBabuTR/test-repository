@@ -1,11 +1,35 @@
-name: Main workflow
+name: Conditional Reusable Workflow Caller
+
 on:
   workflow_dispatch:
+    inputs:
+      run_a:
+        description: "Run workflow A?"
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
 
-env:
-   name: prodstagedevg
 jobs:
-  call-build:
-    uses: ./.github/workflows/reusable-build.yml
+  decide:
+    runs-on: ubuntu-latest
+    outputs:
+      run_a: ${{ github.event.inputs.run_a }}
+    steps:
+      - run: echo "Decision made!"
+
+  call-a:
+    needs: decide
+    if: needs.decide.outputs.run_a == 'true'
+    uses: ./.github/workflows/reusable-a.yml
     with:
-      envi: ${{ env.name}}
+      envi: test
+
+  call-b:
+    needs: decide
+    if: needs.decide.outputs.run_a != 'true'
+    uses: ./.github/workflows/reusable-b.yml
+    with:
+      demo: thistest
