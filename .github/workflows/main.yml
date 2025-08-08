@@ -9,8 +9,9 @@ on:
         default: "true"
         type: choice
         options:
-          - "true"
-          - "false"
+          - "a"
+          - "b"
+          - "c"
 
 jobs:
   decide:
@@ -22,14 +23,20 @@ jobs:
 
   call-a:
     needs: decide
-    if: needs.decide.outputs.run_a == 'true'
+    if: needs.decide.outputs.run_a == 'a'
     uses: ./.github/workflows/reusable-a.yml
     with:
-      envi: test
+      envi: firstcalling
 
   call-b:
     needs: decide
-    if: needs.decide.outputs.run_a != 'true'
+    if: needs.decide.outputs.run_a == 'b'
     uses: ./.github/workflows/reusable-b.yml
     with:
-      demo: thistest
+      demo: thisissecondcalling
+  call-c:
+    needs: decide
+    if: needs.decide.outputs.run_a == 'c'
+    uses: ./.github/workflows/reusable-c.yml
+    with:
+      test: thisthiredcalling
