@@ -10,4 +10,4 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: print env
-        run: echo "building ${{ inputs.envi}}"
+        run: echo "building ${{ inputs.test}}"
