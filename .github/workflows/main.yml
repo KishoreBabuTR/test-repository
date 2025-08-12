@@ -9,9 +9,9 @@ on:
         default: "true"
         type: choice
         options:
-          - "a"
-          - "b"
-          - "c"
+          - Fortified
+          - Deferred
+          - Deficient
 
 jobs:
   # decide:
@@ -46,10 +46,10 @@ jobs:
     #needs: decide
     needs: [call-a, call-b]
     if:
-     github.event.inputs.TestLevel != 'c' &&
+     github.event.inputs.TestLevel != 'Deficient' &&
       (
-        (github.event.inputs.TestLevel == 'a' && needs.call-a.result == 'success') ||
-        (github.event.inputs.TestLevel == 'b' && needs.call-b.result == 'success')
+        (github.event.inputs.TestLevel == 'Fortified' && needs.call-a.result == 'failure') ||
+        (github.event.inputs.TestLevel == 'Deferred' && needs.call-b.result == 'success')
       )
     
     #if: needs.decide.outputs.run_a == 'c'
