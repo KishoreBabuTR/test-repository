@@ -3,7 +3,7 @@ name: Conditional Reusable Workflow Caller
 on:
   workflow_dispatch:
     inputs:
-      run_a:
+      TestLevel:
         description: "Run workflow A?"
         required: true
         default: "true"
@@ -42,3 +42,17 @@ jobs:
     uses: ./.github/workflows/reusable-c.yml
     with:
       test: thisthiredcalling
+  call-d:
+    #needs: decide
+    needs: [call-a, call-b]
+    if:
+     github.event.inputs.TestLevel != 'c' &&
+      (
+        (github.event.inputs.TestLevel == 'a' && needs.call-a.result == 'success') ||
+        (github.event.inputs.TestLevel == 'b' && needs.call-b.result == 'success')
+      )
+    
+    #if: needs.decide.outputs.run_a == 'c'
+    uses: ./.github/workflows/reusable-d.yml
+    with:
+      test: thisfourthcalling
