@@ -45,12 +45,12 @@ jobs:
   call-d:
     #needs: decide
     needs: [call-a, call-b]
-    if:
-     github.event.inputs.TestLevel != 'Deficient' &&
+    if: ${{ github.event.inputs.TestLevel != 'Deficient' &&
       (
-        (github.event.inputs.TestLevel == 'Fortified' && needs.call-a.result == 'failure') ||
+        (github.event.inputs.TestLevel == 'Fortified' && needs.call-a.result == 'success') ||
         (github.event.inputs.TestLevel == 'Deferred' && needs.call-b.result == 'success')
       )
+    }}
     
     #if: needs.decide.outputs.run_a == 'c'
     uses: ./.github/workflows/reusable-d.yml
