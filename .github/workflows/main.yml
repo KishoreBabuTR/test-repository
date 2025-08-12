@@ -14,29 +14,31 @@ on:
           - "c"
 
 jobs:
-  decide:
-    runs-on: ubuntu-latest
-    outputs:
-      run_a: ${{ github.event.inputs.run_a }}
-    steps:
-      - run: echo "Decision made!"
+  # decide:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     run_a: ${{ github.event.inputs.run_a }}
+  #   steps:
+  #     - run: echo "Decision made!"
 
   call-a:
-    needs: decide
-    if: needs.decide.outputs.run_a == 'a'
+    # needs: decide
+    # if: needs.decide.outputs.run_a == 'a'
     uses: ./.github/workflows/reusable-a.yml
     with:
       envi: firstcalling
 
   call-b:
-    needs: decide
-    if: needs.decide.outputs.run_a == 'b'
+    #needs: decide
+    needs: call-a
+    #if: needs.decide.outputs.run_a == 'b'
     uses: ./.github/workflows/reusable-b.yml
     with:
       demo: thisissecondcalling
   call-c:
-    needs: decide
-    if: needs.decide.outputs.run_a == 'c'
+    #needs: decide
+    needs: call-b
+    #if: needs.decide.outputs.run_a == 'c'
     uses: ./.github/workflows/reusable-c.yml
     with:
       test: thisthiredcalling
