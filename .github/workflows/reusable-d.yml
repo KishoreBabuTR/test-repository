@@ -5,9 +5,16 @@ on:
       test:
         required: true
         type: string
+      buildnumber:
+        required: true
+        type: string
+env:
+  buildnumber: ${{ inputs.buildnumber }}
 jobs:
   build:
     runs-on: windows-latest
     steps:
       - name: print env
-        run: echo "building ${{ inputs.test}}"
+        run: |
+          echo "building ${{ inputs.test}}"
+          echo "buildnumber is $env:buildnumber"
