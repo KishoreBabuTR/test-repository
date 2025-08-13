@@ -57,3 +57,4 @@ jobs:
     uses: ./.github/workflows/reusable-d.yml
     with:
       test: thisfourthcalling
+      buildnumber: 2025.3.0.${{github.run_number}}
