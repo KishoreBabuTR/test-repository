@@ -1,75 +1,13 @@
-# name: Conditional Reusable Workflow Caller
-
-# on:
-#   workflow_dispatch:
-#     inputs:
-#       TestLevel:
-#         description: "Run workflow A?"
-#         required: true
-#         default: "true"
-#         type: choice
-#         options:
-#           - Fortified
-#           - Deferred
-#           - Deficient
-# env:
-#   calla: test
-
-# jobs:
-#   # decide:
-#   #   runs-on: ubuntu-latest
-#   #   outputs:
-#   #     run_a: ${{ github.event.inputs.run_a }}
-#   #   steps:
-#   #     - run: echo "Decision made!"
-
-#   call-a:
-#     # needs: decide
-#     # if: needs.decide.outputs.run_a == 'a'
-#     uses: ./.github/workflows/reusable-a.yml
-#     with:
-#       evr: ${{ env.calla }}
-
-#   call-b:
-#     #needs: decide
-#     needs: call-a
-#     #if: needs.decide.outputs.run_a == 'b'
-#     uses: ./.github/workflows/reusable-b.yml
-#     with:
-#       demo: thisissecondcalling
-#   call-c:
-#     #needs: decide
-#     needs: call-b
-#     #if: needs.decide.outputs.run_a == 'c'
-#     uses: ./.github/workflows/reusable-c.yml
-#     with:
-#       test: thisthiredcalling
-#   call-d:
-#     #needs: decide
-#     needs: [call-a, call-b]
-#     if: 
-#       github.event.inputs.TestLevel != 'Deficient' &&
-#       (
-#         (github.event.inputs.TestLevel == 'Fortified' && needs.call-a.result == 'success') ||
-#         (github.event.inputs.TestLevel == 'Deferred' && needs.call-b.result == 'success')
-#       )
-    
-    
-#     #if: needs.decide.outputs.run_a == 'c'
-#     uses: ./.github/workflows/reusable-d.yml
-#     with:
-#       test: thisfourthcalling
-#       buildnumber: 2025.3.0.${{github.run_number}}
 name: Main Workflow
 
 on:
   push:
 
 env:
-  MY_ENV_VAR: "hello-from-global-env"
+  MY_ENV_VAR: "hello-from-global-env"   # <-- defined at workflow level
 
 jobs:
   call-reusable:
     uses: ./.github/workflows/reusable-a.yml
     with:
-      MY_ENV_VAR: ${{ env.MY_ENV_VAR }}
+      MY_ENV_VAR: ${{ env.MY_ENV_VAR }} # <-- this works!
