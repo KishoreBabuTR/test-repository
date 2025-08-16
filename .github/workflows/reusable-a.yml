@@ -2,7 +2,7 @@ name: reusable build
 on:
   workflow_call:
     inputs:
-      calla:
+      evr:
         required: true
         type: string
 jobs:
@@ -10,4 +10,4 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: print env
-        run: echo "building ${{ inputs.calla}}"
+        run: echo "building ${{ inputs.evr}}"
