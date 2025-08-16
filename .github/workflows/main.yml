@@ -1,7 +1,7 @@
-name: Main Workflow
+# name: Main Workflow
 
-on:
-  push:
+# on:
+#   push:
 
 env:
   MY_ENV_VAR: "hello-from-global-env"   # <-- defined at workflow level
