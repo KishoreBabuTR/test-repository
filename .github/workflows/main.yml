@@ -28,7 +28,7 @@ jobs:
     # if: needs.decide.outputs.run_a == 'a'
     uses: ./.github/workflows/reusable-a.yml
     with:
-      calla: {{ env.firstcalling }}
+      calla: ${{ env.firstcalling }}
 
   call-b:
     #needs: decide
