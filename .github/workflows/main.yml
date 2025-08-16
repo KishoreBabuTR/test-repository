@@ -12,6 +12,8 @@ on:
           - Fortified
           - Deferred
           - Deficient
+env:
+  calla: test
 
 jobs:
   # decide:
@@ -26,7 +28,7 @@ jobs:
     # if: needs.decide.outputs.run_a == 'a'
     uses: ./.github/workflows/reusable-a.yml
     with:
-      envi: firstcalling
+      calla: {{ env.firstcalling }}
 
   call-b:
     #needs: decide
