@@ -1,13 +1,14 @@
-name: reusable build
 on:
   workflow_call:
     inputs:
-      evr:
+      MY_ENV_VAR:
         required: true
         type: string
+
 jobs:
-  build:
-    runs-on: windows-latest
+  print-env:
+    runs-on: ubuntu-latest
+    env:
+      MY_ENV_VAR: ${{ inputs.MY_ENV_VAR }}
     steps:
-      - name: print env
-        run: echo "building ${{ inputs.evr}}"
+      - run: echo "MY_ENV_VAR is $MY_ENV_VAR"
