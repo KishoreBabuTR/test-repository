@@ -15,6 +15,11 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+      - name: Show workspace structure
+        run: |
+          pwd
+          ls -R
+        shell: pwsh
 
       - name: Restore dependencies
         run: dotnet restore SampleAppSolution/SampleApp/SampleApp.csproj
