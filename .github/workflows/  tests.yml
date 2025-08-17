@@ -17,11 +17,13 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore
-        working-directory: SampleAppSolution\SampleApp
+        run: dotnet restore SampleAppSolution/SampleApp/SampleApp.csproj
 
-      - name: Build solution
-        run: dotnet build --configuration Release
+      - name: Build project
+        run: dotnet build SampleAppSolution/SampleApp/SampleApp.csproj --configuration Release
+
+      # - name: Build solution
+      #   run: dotnet build --configuration Release
 
       - name: List test DLLs
         run: Get-ChildItem -Path . -Recurse -Filter *.Tests.dll
