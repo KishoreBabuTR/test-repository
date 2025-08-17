@@ -18,6 +18,7 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore
+        working-directory: SampleApp
 
       - name: Build solution
         run: dotnet build --configuration Release
