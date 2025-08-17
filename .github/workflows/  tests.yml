@@ -1,0 +1,37 @@
+name: .NET VSTest Example
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build solution
+        run: dotnet build --configuration Release
+
+      - name: List test DLLs
+        run: Get-ChildItem -Path . -Recurse -Filter *.Tests.dll
+        shell: pwsh
+
+      - name: Run VSTest
+        uses: microsoft/vstest-action@v1.0.0
+        with:
+          testAssembly: '**\*.Tests.dll'
+          searchFolder: ${{ github.workspace }}
+          resultLogsArtifactName: vs-test-result-logs
+          ifNoFilesFound: error
