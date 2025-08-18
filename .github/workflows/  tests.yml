@@ -31,13 +31,13 @@ jobs:
       #   run: dotnet build --configuration Release
 
       - name: List test DLLs
-        run: Get-ChildItem -Path . -Recurse -Filter *.Tests.dll
+        run: Get-ChildItem -Path . -Recurse -Filter *.dll
         shell: pwsh
 
       - name: Run VSTest
         uses: microsoft/vstest-action@v1.0.0
         with:
-          testAssembly: '**\*.Tests.dll'
+          testAssembly: '**\*.dll'
           searchFolder: ${{ github.workspace }}
           resultLogsArtifactName: vs-test-result-logs
           ifNoFilesFound: error
