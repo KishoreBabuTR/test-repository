@@ -1,12 +1,13 @@
-# name: Main Workflow
+name: Main Workflow
 
 on:
   push:
+
+env:
+  MY_ENV_VAR: "hello-from-global-env"
 
 jobs:
   call-reusable:
     uses: ./.github/workflows/reusable-a.yml
     with:
-      MY_ENV_VAR: ${{ env.MY_ENV_VAR }} # <-- this works!
-    env:
-      MY_ENV_VAR: "hello-from-global-env"   # <-- defined at workflow level
+      MY_ENV_VAR: ${{ env.MY_ENV_VAR }}
