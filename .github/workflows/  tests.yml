@@ -38,6 +38,6 @@ jobs:
         uses: microsoft/vstest-action@v1.0.0
         with:
           testAssembly: '**\*.dll'
-          searchFolder: ${{ github.workspace }}
+          searchFolder: ${{ github.workspace }}\SampleAppSolution
           resultLogsArtifactName: vs-test-result-logs
           ifNoFilesFound: error
