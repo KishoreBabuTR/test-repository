@@ -16,7 +16,7 @@ jobs:
           $ACS_BUILD_ROOT = "$env:BUILDOUT_ROOT\ACS_AWS\2025.3"
           $DropLocationForMakeInstaller = "$ACS_BUILD_ROOT.$env:GITHUB_RUN_NUMBER\install
           echo "DropLocationForMakeInstaller=$DropLocationForMakeInstaller" >> $env:GITHUB_ENV
-        shell: powershell
+        shell: pwsh
       - name: print env DropLocationForMakeInstaller
         run: |
          echo "MY_ENV_VAR is ----  ${{ inputs.MY_ENV_VAR }}"
