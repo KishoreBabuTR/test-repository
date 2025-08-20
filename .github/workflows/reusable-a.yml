@@ -4,11 +4,13 @@ on:
       MY_ENV_VAR:
         required: true
         type: string
+env:
+  demo: thisisdemo
 
 jobs:
   print-env:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "MY_ENV_VAR is $MY_ENV_VAR"
-        env:
-          MY_ENV_VAR: ${{ inputs.MY_ENV_VAR }}
+      - run: echo "MY_ENV_VAR is ${{ inputs.MY_ENV_VAR }}"
+        # env:
+        #   MY_ENV_VAR: ${{ inputs.MY_ENV_VAR }}
