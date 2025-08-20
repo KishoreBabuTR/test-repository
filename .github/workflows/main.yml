@@ -7,22 +7,22 @@ env:
   BUILDOUT_ROOT: C:\BuildOut
 
 jobs:
-  compute-path:
-    runs-on: ubuntu-latest
-    env:
-      BUILDOUT_ROOT: ${{ env.BUILDOUT_ROOT }}
-    outputs:
-      installer_path: ${{ steps.set-installer-path.outputs.installer_path }}
-    steps:
-      - id: set-installer-path
-        shell: bash
-        run: |
-          ACS_BUILD_ROOT="${BUILDOUT_ROOT}\\ACS_AWS\\2025.3"
-          DropLocationForMakeInstaller="${ACS_BUILD_ROOT}.${GITHUB_RUN_NUMBER}\\install"
-          echo "installer_path=$DropLocationForMakeInstaller" >> $GITHUB_OUTPUT
+  # compute-path:
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     BUILDOUT_ROOT: ${{ env.BUILDOUT_ROOT }}
+  #   outputs:
+  #     installer_path: ${{ steps.set-installer-path.outputs.installer_path }}
+  #   steps:
+  #     - id: set-installer-path
+  #       shell: bash
+  #       run: |
+  #         ACS_BUILD_ROOT="${BUILDOUT_ROOT}\\ACS_AWS\\2025.3"
+  #         DropLocationForMakeInstaller="${ACS_BUILD_ROOT}.${GITHUB_RUN_NUMBER}\\install"
+  #         echo "installer_path=$DropLocationForMakeInstaller" >> $GITHUB_OUTPUT
 
   call-reusable:
-    needs: compute-path
+    # needs: compute-path
     uses: ./.github/workflows/reusable-a.yml
     with:
-      MY_ENV_VAR: ${{ needs.compute-path.outputs.installer_path }}
+      MY_ENV_VAR: test
