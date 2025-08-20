@@ -8,14 +8,14 @@ env:
   BUILDOUT_ROOT: C:\BuildOut
 
 jobs:
-  steps:
-      - name: Compose paths
-        run: |
-          $ACS_BUILD_ROOT = "$env:BUILDOUT_ROOT\ACS_AWS\2025.3"
-          $DropLocationForMakeInstaller = "$ACS_BUILD_ROOT.$env:GITHUB_RUN_NUMBER\install"
-          echo "DropLocationForMakeInstaller=$DropLocationForMakeInstaller" >> $env:GITHUB_ENV
-        shell: pwsh
+  # steps:
+  #     - name: Compose paths
+  #       run: |
+  #         $ACS_BUILD_ROOT = "$env:BUILDOUT_ROOT\ACS_AWS\2025.3"
+  #         $DropLocationForMakeInstaller = "$ACS_BUILD_ROOT.$env:GITHUB_RUN_NUMBER\install"
+  #         echo "DropLocationForMakeInstaller=$DropLocationForMakeInstaller" >> $env:GITHUB_ENV
+  #       shell: pwsh
   call-reusable:
     uses: ./.github/workflows/reusable-a.yml
     with:
-      MY_ENV_VAR: "${{ env.DropLocationForMakeInstaller }}"
+      MY_ENV_VAR: "${{ env.BUILDOUT_ROOT }}\\ACS_AWS\\2025.3.${{ github.run_number }}\\install"
