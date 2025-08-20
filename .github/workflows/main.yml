@@ -4,10 +4,18 @@ on:
   push:
 
 env:
-  MY_ENV_VAR: "hello-from-global-env"
+  demo: thisisdemo
+  BUILDOUT_ROOT: C:\BuildOut
 
 jobs:
+  steps:
+      - name: Compose paths
+        run: |
+          $ACS_BUILD_ROOT = "$env:BUILDOUT_ROOT\ACS_AWS\2025.3"
+          $DropLocationForMakeInstaller = "$ACS_BUILD_ROOT.$env:GITHUB_RUN_NUMBER\install"
+          echo "DropLocationForMakeInstaller=$DropLocationForMakeInstaller" >> $env:GITHUB_ENV
+        shell: pwsh
   call-reusable:
     uses: ./.github/workflows/reusable-a.yml
     with:
-      MY_ENV_VAR: test
+      MY_ENV_VAR: "${{ env.DropLocationForMakeInstaller }}"
