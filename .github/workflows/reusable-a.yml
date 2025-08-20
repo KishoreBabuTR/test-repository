@@ -6,11 +6,25 @@ on:
         type: string
 env:
   demo: thisisdemo
-
+  BUILDOUT_ROOT: C:\BuildOut
 jobs:
   print-env:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "MY_ENV_VAR is ----  ${{ inputs.MY_ENV_VAR }}"
+      - name: Compose paths
+        run: |
+          $ACS_BUILD_ROOT = "$env:BUILDOUT_ROOT\ACS_AWS\2025.3"
+          $DropLocationForMakeInstaller = "$ACS_BUILD_ROOT.$env:GITHUB_RUN_NUMBER\install
+          echo "DropLocationForMakeInstaller=$DropLocationForMakeInstaller" >> $env:GITHUB_ENV
+        shell: powershell
+      - name: print env DropLocationForMakeInstaller
+      - run: |
+         echo "MY_ENV_VAR is ----  ${{ inputs.MY_ENV_VAR }}"
+         echo "droplocation is ${{ env.DropLocationForMakeInstaller }}"
         # env:
         #   MY_ENV_VAR: ${{ inputs.MY_ENV_VAR }}
+
+      - name: tartget
+        run: |
+         $target = "${{ env.DropLocationForMakeInstaller }}"
+         echo "----$target"
