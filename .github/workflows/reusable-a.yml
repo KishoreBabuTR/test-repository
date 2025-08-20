@@ -18,7 +18,7 @@ jobs:
           echo "DropLocationForMakeInstaller=$DropLocationForMakeInstaller" >> $env:GITHUB_ENV
         shell: powershell
       - name: print env DropLocationForMakeInstaller
-      - run: |
+        run: |
          echo "MY_ENV_VAR is ----  ${{ inputs.MY_ENV_VAR }}"
          echo "droplocation is ${{ env.DropLocationForMakeInstaller }}"
         # env:
