@@ -1,7 +1,7 @@
 name: .NET VSTest Example
 
-# on:
-#   workflow_dispatch:
+on:
+  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -15,6 +15,7 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.0.x'
+
       - name: Show workspace structure
         run: |
           pwd
@@ -27,15 +28,12 @@ jobs:
       - name: Build project
         run: dotnet build SampleAppSolution/SampleApp/SampleApp.csproj --configuration Release
 
-      # - name: Build solution
-      #   run: dotnet build --configuration Release
-
       - name: List test DLLs
         run: Get-ChildItem -Path . -Recurse -Filter *.dll
         shell: pwsh
 
       - name: Run tests
-  uses: microsoft/vstest-action@v1
-  with:
-    testAssembly: '**/bin/**/*.dll'
-    searchFolder: 'D:\a\test-repository\test-repository\SampleAppSolution'
+        uses: microsoft/vstest-action@v1
+        with:
+          testAssembly: '**/bin/**/*.dll'
+          searchFolder: 'SampleAppSolution'
