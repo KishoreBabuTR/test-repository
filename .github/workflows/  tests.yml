@@ -48,6 +48,6 @@ jobs:
         shell: pwsh
       - name: list of test results
         run: |
-          Get-ChildItem -path ./TestResults
+          Get-ChildItem -path "${{ github.workspace }}\TestResults"
         shell: pwsh
         
