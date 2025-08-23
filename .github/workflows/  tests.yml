@@ -3,42 +3,57 @@ name: .NET VSTest Example
 on:
   workflow_dispatch:
 
-jobs:
-  build-and-test:
+# jobs:
+#   build-and-test:
+#     runs-on: windows-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
+
+#       - name: Setup .NET
+#         uses: actions/setup-dotnet@v4
+#         with:
+#           dotnet-version: '8.0.x'
+
+#       - name: Show workspace structure
+#         run: |
+#           pwd
+#           ls -R
+#         shell: pwsh
+
+#       - name: Restore dependencies
+#         run: dotnet restore SampleAppSolution/SampleApp/SampleApp.csproj
+
+#       - name: Build project
+#         run: dotnet build SampleAppSolution/SampleApp/SampleApp.csproj --configuration Release
+
+#       - name: Build test project
+#         run: dotnet build SampleAppSolution/SampleApp.Tests/SampleApp.Tests.csproj --configuration Release
+
+#       - name: List test DLLs
+#         run: Get-ChildItem -Path . -Recurse -Filter *.dll
+#         shell: pwsh
+
+#       - uses: microsoft/vstest-action@v1.0.0
+#         with:
+#           testAssembly: '**/SampleApp.Tests.dll'
+#       # or wherever your build output actually places the file
+#           searchFolder: '.'
+#           resultLogsArtifactName: vs-test-result-logs
+#           ifNoFilesFound: warn
+  jobs:
+  my_action_job:
     runs-on: windows-latest
-
+    name: A job to run VSTest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - name: Download tests binary zip
+        run: powershell Invoke-WebRequest -Uri "https://localworker.blob.core.windows.net/win-x64/tests.zip" -OutFile "./tests.zip"
+      - name: Unzip tests binary
+        run: powershell Expand-Archive -Path tests.zip -DestinationPath ./
+      - name: Run tests
+        uses: microsoft-approved-actions/vstest@master
         with:
-          dotnet-version: '8.0.x'
-
-      - name: Show workspace structure
-        run: |
-          pwd
-          ls -R
-        shell: pwsh
-
-      - name: Restore dependencies
-        run: dotnet restore SampleAppSolution/SampleApp/SampleApp.csproj
-
-      - name: Build project
-        run: dotnet build SampleAppSolution/SampleApp/SampleApp.csproj --configuration Release
-
-      - name: Build test project
-        run: dotnet build SampleAppSolution/SampleApp.Tests/SampleApp.Tests.csproj --configuration Release
-
-      - name: List test DLLs
-        run: Get-ChildItem -Path . -Recurse -Filter *.dll
-        shell: pwsh
-
-      - uses: microsoft/vstest-action@v1.0.0
-        with:
-          testAssembly: '**/SampleApp.Tests.dll'
-      # or wherever your build output actually places the file
-          searchFolder: '.'
-          resultLogsArtifactName: vs-test-result-logs
-          ifNoFilesFound: warn
+          testAssembly: CloudTest.DefaultSamples*.dll
+          searchFolder: ./tests/
+          runInParallel: true
