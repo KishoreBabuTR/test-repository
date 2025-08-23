@@ -40,5 +40,9 @@ jobs:
 
       - name: VSTest
         run: |
-          vstest.console.exe /Platform:x64 $(Get-ChildItem -Path . -Recurse -Filter SampleApp.Tests.dll | Select-Object -First 1).FullName
+          vstest.console.exe /Platform:x64 $(Get-ChildItem -Path . -Recurse -Filter SampleApp.Tests.dll | Select-Object -First 1).FullName /Logger:trx
         shell: pwsh
+
+      - name: List test DLLs
+        run: Get-ChildItem -Path .
+        shell: pwsh 
