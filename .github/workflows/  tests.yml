@@ -45,4 +45,9 @@ jobs:
 
       - name: List test DLLs
         run: Get-ChildItem -Path .
-        shell: pwsh 
+        shell: pwsh
+      - name: list of test results
+        run: |
+          Get-ChildItem -path ./TestResults
+        shell: pwsh
+        
