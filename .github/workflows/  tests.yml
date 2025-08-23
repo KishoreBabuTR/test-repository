@@ -42,7 +42,7 @@ on:
 #           searchFolder: '.'
 #           resultLogsArtifactName: vs-test-result-logs
 #           ifNoFilesFound: warn
-  jobs:
+jobs:
   my_action_job:
     runs-on: windows-latest
     name: A job to run VSTest
