@@ -37,7 +37,7 @@ jobs:
 
       - uses: microsoft/vstest-action@v1.0.0
         with:
-          testAssembly: 'SampleAppSolution/SampleApp.Tests/bin/Release/net8.0/SampleApp.Tests.dll'
+          testAssembly: '**/SampleApp.Tests.dll'
       # or wherever your build output actually places the file
           searchFolder: '.'
           resultLogsArtifactName: vs-test-result-logs
