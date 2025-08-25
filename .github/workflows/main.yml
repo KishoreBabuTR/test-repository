@@ -4,7 +4,19 @@ on:
   push:
 
 jobs:
-  call-reusable:
+  call-reusable-a:
     uses: ./.github/workflows/reusable-a.yml
     with:
       dem: firstcalling
+  call-reusable-b:
+    uses: ./.github/workflows/reusable-b.yml
+    with:
+      dem: secondcalling
+  call-reusable-c:
+    uses: ./.github/workflows/reusable-c.yml
+    with:
+      dem: thirdcalling
+  call-reusable-d:
+    uses: ./.github/workflows/reusable-d.yml
+    with:
+      dem: fourthcalling

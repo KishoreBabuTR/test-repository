@@ -2,7 +2,7 @@ name: reusable build
 on:
   workflow_call:
     inputs:
-      test:
+      demo:
         required: true
         type: string
       buildnumber:
@@ -16,6 +16,6 @@ jobs:
     steps:
       - name: print env
         run: |
-          echo "building ${{ inputs.test}}"
+          echo "building ${{ inputs.demo}}"
           echo "buildnumber is $env:buildnumber"
           
