@@ -1,13 +1,13 @@
-# .github/workflows/reusable-a.yml
+name: reusable build
 on:
   workflow_call:
     inputs:
-      MY_ENV_VAR:
+      dem:
         required: true
         type: string
-
 jobs:
-  show-input:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: windows-latest
     steps:
-      - run: echo "MY_ENV_VAR is ${{ inputs.MY_ENV_VAR }}"
+      - name: print env
+        run: echo "building ${{ inputs.dem}}"
