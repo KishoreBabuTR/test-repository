@@ -3,10 +3,8 @@ name: Main Workflow
 on:
   push:
 
-
 jobs:
   call-reusable:
-    # needs: compute-path
     uses: ./.github/workflows/reusable-a.yml
-    with:
-      MY_ENV_VAR: firstcalling
+      with:
+        MY_ENV_VAR: firstcalling
