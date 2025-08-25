@@ -1,14 +1,13 @@
+# .github/workflows/reusable-a.yml
 on:
   workflow_call:
     inputs:
       MY_ENV_VAR:
         required: true
         type: string
+
 jobs:
-  print-env:
+  show-input:
     runs-on: ubuntu-latest
-    steps
-      - name: print env DropLocationForMakeInstaller
-        run: |
-         echo "MY_ENV_VAR is ----  ${{ inputs.MY_ENV_VAR }}"
-      
+    steps:
+      - run: echo "MY_ENV_VAR is ${{ inputs.MY_ENV_VAR }}"
