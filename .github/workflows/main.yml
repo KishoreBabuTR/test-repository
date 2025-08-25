@@ -1,10 +1,21 @@
 name: Main Workflow
 
 on:
-  push:
+  workflow_dispatch:
+    inputs:
+      TestLevel:
+        description: "Test Level"
+        required: true
+        type: choice
+        default: Fortified
+        options:
+          - Fortified
+          - Deferred
+          - Deficient    
 
 jobs:
   call-reusable-a:
+    
     uses: ./.github/workflows/reusable-a.yml
     with:
       demo: firstcalling
@@ -17,6 +28,14 @@ jobs:
     with:
       demo: thirdcalling
   call-reusable-d:
+    needs: [call-reusable-a, call-reusable-b]
+    if: ${{ github.event.inputs.TestLevel != 'Deficient' &&
+      (
+        (github.event.inputs.TestLevel == 'Fortified' && needs.MakeSchemaDocJob.result == 'success') ||
+        (github.event.inputs.TestLevel == 'Deferred' && needs.cloudspot.result == 'success')
+      )
+    }}
+    uses: ./.github/workflows/testprep.yml
     uses: ./.github/workflows/reusable-d.yml
     with:
       demo: fourthcalling
