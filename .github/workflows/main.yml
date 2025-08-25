@@ -7,16 +7,16 @@ jobs:
   call-reusable-a:
     uses: ./.github/workflows/reusable-a.yml
     with:
-      dem: firstcalling
+      demo: firstcalling
   call-reusable-b:
     uses: ./.github/workflows/reusable-b.yml
     with:
-      dem: secondcalling
+      demo: secondcalling
   call-reusable-c:
     uses: ./.github/workflows/reusable-c.yml
     with:
-      dem: thirdcalling
+      demo: thirdcalling
   call-reusable-d:
     uses: ./.github/workflows/reusable-d.yml
     with:
-      dem: fourthcalling
+      demo: fourthcalling
