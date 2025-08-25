@@ -15,27 +15,28 @@ on:
 
 jobs:
   call-reusable-a:
-    
     uses: ./.github/workflows/reusable-a.yml
     with:
       demo: firstcalling
+
   call-reusable-b:
     uses: ./.github/workflows/reusable-b.yml
     with:
       demo: secondcalling
+
   call-reusable-c:
     uses: ./.github/workflows/reusable-c.yml
     with:
       demo: thirdcalling
+
   call-reusable-d:
     needs: [call-reusable-a, call-reusable-b]
     if: ${{ github.event.inputs.TestLevel != 'Deficient' &&
       (
-        (github.event.inputs.TestLevel == 'Fortified' && needs.MakeSchemaDocJob.result == 'success') ||
-        (github.event.inputs.TestLevel == 'Deferred' && needs.cloudspot.result == 'success')
+        (github.event.inputs.TestLevel == 'Fortified' && needs.call-reusable-a.result == 'success') ||
+        (github.event.inputs.TestLevel == 'Deferred' && needs.call-reusable-b.result == 'success')
       )
     }}
-    uses: ./.github/workflows/testprep.yml
     uses: ./.github/workflows/reusable-d.yml
     with:
       demo: fourthcalling
