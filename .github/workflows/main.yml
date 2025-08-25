@@ -7,4 +7,4 @@ jobs:
   call-reusable:
     uses: ./.github/workflows/reusable-a.yml
     with:
-      MY_ENV_VAR: firstcalling
+      demo: firstcalling
