@@ -14,8 +14,6 @@ on:
           - Deficient    
   schedule:
     - cron: '*/15 * * * *'   # Every 5 minutes
-  env:
-    TEST_LEVEL: ${{ github.event.inputs.TestLevel || 'Fortified' }}
 
 jobs:
   call-reusable-a:
