@@ -38,7 +38,7 @@ jobs:
       (
         github.event.inputs.TestLevel != 'Deficient' &&
         (
-          (github.event.inputs.TestLevel == 'Fortified' && needs.call-reusable-a.result == 'success')
+          github.event.inputs.TestLevel == 'Fortified' && needs.call-reusable-a.result == 'success'
       )
     uses: ./.github/workflows/reusable-d.yml
     with:
