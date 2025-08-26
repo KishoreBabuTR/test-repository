@@ -12,7 +12,7 @@ on:
           - Fortified
           - Deferred
           - Deficient    
-schedule:
+  schedule:
     - cron: '*/5 * * * *'   # Every day at 02:00 UTC
 jobs:
   call-reusable-a:
