@@ -13,7 +13,7 @@ on:
           - Deferred
           - Deficient    
   schedule:
-    - cron: '*/5 * * * *'   # Every 5 minutes
+    - cron: '*/15 * * * *'   # Every 5 minutes
 
 jobs:
   call-reusable-a:
