@@ -12,7 +12,8 @@ on:
           - Fortified
           - Deferred
           - Deficient    
-
+schedule:
+    - cron: '*/5 * * * *'   # Every day at 02:00 UTC
 jobs:
   call-reusable-a:
     uses: ./.github/workflows/reusable-a.yml
