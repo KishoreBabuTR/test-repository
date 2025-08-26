@@ -14,17 +14,19 @@ on:
           - Deficient    
   schedule:
     - cron: '*/15 * * * *'   # Every 5 minutes
+  env:
+    TEST_LEVEL: ${{ github.event.inputs.TestLevel || 'Fortified' }}
 
 jobs:
   call-reusable-a:
     uses: ./.github/workflows/reusable-a.yml
     with:
-      demo: firstcalling
+      demo: firstcallinggggggg
 
   call-reusable-b:
     uses: ./.github/workflows/reusable-b.yml
     with:
-      demo: secondcalling
+      demo: secondcalling11111111
 
   call-reusable-c:
     uses: ./.github/workflows/reusable-c.yml
