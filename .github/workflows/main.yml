@@ -30,13 +30,10 @@ jobs:
       demo: thirdcalling
 
   call-reusable-d:
-     needs: [call-reusable-a, call-reusable-b]
-     if: ${{ github.event.inputs.TestLevel != 'Deficient' &&
-      (
-        (github.event.inputs.TestLevel == 'Fortified' && needs.call-reusable-a.result == 'success') ||
-        (github.event.inputs.TestLevel == 'Deferred' && needs.call-reusable-b.result == 'success')
-      )
-     }}
-    uses: ./.github/workflows/reusable-d.yml
+    needs: [reusable-a, reusable-b]
+    
+    if: ${{ needs.reusable-a.result == 'success' || needs.reusable-b.result == 'success' }}
+    uses: ./.github/workflows/reusalbe-d.yml
     with:
-      demo: fourthcalling
+      demo: thiisfourthcalling
+    
