@@ -32,7 +32,7 @@ jobs:
   call-reusable-d:
     needs: [call-reusable-a, call-reusable-b]
     
-    if: ${{ needs.reusable-a.result == 'success' || needs.reusable-b.result == 'success' }}
+    if: ${{ needs.call-reusable-a.result == 'success' || needs.call-reusable-b.result == 'success' }}
     uses: ./.github/workflows/reusable-d.yml
     with:
       demo: thiisfourthcalling
