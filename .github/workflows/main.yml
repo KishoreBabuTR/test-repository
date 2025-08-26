@@ -13,7 +13,8 @@ on:
           - Deferred
           - Deficient    
   schedule:
-    - cron: '*/5 * * * *'   # Every day at 02:00 UTC
+    - cron: '*/5 * * * *'   # Every 5 minutes
+
 jobs:
   call-reusable-a:
     uses: ./.github/workflows/reusable-a.yml
@@ -30,36 +31,17 @@ jobs:
     with:
       demo: thirdcalling
 
-  # call-reusable-d:
-  #   #needs: [call-reusable-a, call-reusable-b]
-  #   needs: [call-reusable-a, call-reusable-b]
-  #   if: >
-  #     github.event.inputs.TestLevel != 'Deficient' &&
-  #       (
-  #        needs.call-reusable-a.result == 'success' &&
-  #        needs.call-reusable-b.result == 'success' &&
-  #       )
-  #   #if: ${{ needs.call-reusable-a.result == 'success' || needs.call-reusable-b.result == 'success' }}
-  #   uses: ./.github/workflows/reusable-d.yml
-  #   with:
-  #     demo: thiisfourthcalling
-  #########################################################
-  # call-reusable-d:
-  #   needs: [call-reusable-a, call-reusable-b]
-  #   if: ${{ github.event.inputs.TestLevel != 'Deficient' && (needs.call-reusable-a.result == 'success' || needs.call-reusable-b.result == 'success') }}
-  #   uses: ./.github/workflows/reusable-d.yml
-  #   with:
-  #     demo: thiisfourthcalling
-  ##################################################################
   call-reusable-d:
     needs: [call-reusable-a, call-reusable-b]
-    if: >
-      github.event.inputs.TestLevel != 'Deficient' &&
-       (
-          (github.event.inputs.TestLevel == 'Fortified' && needs.call-reusable-a.result == 'success') &&
+    if: |
+      github.event_name == 'schedule' ||
+      (
+        github.event.inputs.TestLevel != 'Deficient' &&
+        (
+          (github.event.inputs.TestLevel == 'Fortified' && needs.call-reusable-a.result == 'success') ||
           (github.event.inputs.TestLevel == 'Deferred' && needs.call-reusable-b.result == 'success')
-       )
+        )
+      )
     uses: ./.github/workflows/reusable-d.yml
     with:
       demo: thiisfourthcalling
-    
