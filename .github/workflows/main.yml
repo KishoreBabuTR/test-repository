@@ -112,7 +112,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print TestLevel input
-        run: echo "TestLevel is: ${{ github.event.inputs.TestLevel || 'Fortified' }}"
+        run: |
+          echo "TestLevel is: ${{ github.event.inputs.TestLevel || 'Fortified' }}"
 
   call-reusable-a:
     uses: ./.github/workflows/reusable-a.yml
