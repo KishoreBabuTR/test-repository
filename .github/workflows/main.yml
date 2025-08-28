@@ -99,7 +99,7 @@ on:
         description: "Test Level"
         required: true
         type: choice
-        default: Fortified
+        default: Deficient
         options:
           - Fortified
           - Deferred
