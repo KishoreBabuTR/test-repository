@@ -1,50 +1,3 @@
-name: Main Workflow
-
-on:
-  workflow_dispatch:
-    inputs:
-      TestLevel:
-        description: "Test Level"
-        required: true
-        type: choice
-        default: Fortified
-        options:
-          - Fortified
-          - Deferred
-          - Deficient    
-  schedule:
-    - cron: '*/15 * * * *'   # Every 5 minutes
-
-jobs:
-  call-reusable-a:
-    uses: ./.github/workflows/reusable-a.yml
-    with:
-      demo: firstcallinggggggg
-
-  call-reusable-b:
-    uses: ./.github/workflows/reusable-b.yml
-    with:
-      demo: secondcalling11111111
-
-  call-reusable-c:
-    uses: ./.github/workflows/reusable-c.yml
-    with:
-      demo: thirdcalling
-
-  call-reusable-d:
-    needs: [call-reusable-a, call-reusable-b]
-    if: |
-      github.event_name == 'schedule' ||
-      (
-        github.event.inputs.TestLevel != 'Deficient' &&
-        (
-          github.event.inputs.TestLevel == 'Fortified' && needs.call-reusable-a.result == 'success'
-      )
-      )
-    uses: ./.github/workflows/reusable-d.yml
-    with:
-      demo: thiisfourthcalling
-##############################################################################################
 # name: Main Workflow
 
 # on:
@@ -60,7 +13,7 @@ jobs:
 #           - Deferred
 #           - Deficient    
 #   schedule:
-#     - cron: '*/15 * * * *'   # Every 15 minutes
+#     - cron: '*/15 * * * *'   # Every 5 minutes
 
 # jobs:
 #   call-reusable-a:
@@ -81,11 +34,111 @@ jobs:
 #   call-reusable-d:
 #     needs: [call-reusable-a, call-reusable-b]
 #     if: |
+#       github.event_name == 'schedule' ||
 #       (
-#         github.event_name == 'schedule' ||
-#         github.event.inputs.TestLevel == 'Fortified' ||
-#         github.event.inputs.TestLevel == ''
-#       ) && needs.call-reusable-a.result == 'success'
+#         github.event.inputs.TestLevel != 'Deficient' &&
+#         (
+#           github.event.inputs.TestLevel == 'Fortified' && needs.call-reusable-a.result == 'success'
+#       )
+#       )
 #     uses: ./.github/workflows/reusable-d.yml
 #     with:
 #       demo: thiisfourthcalling
+# ##############################################################################################
+# # name: Main Workflow
+
+# # on:
+# #   workflow_dispatch:
+# #     inputs:
+# #       TestLevel:
+# #         description: "Test Level"
+# #         required: true
+# #         type: choice
+# #         default: Fortified
+# #         options:
+# #           - Fortified
+# #           - Deferred
+# #           - Deficient    
+# #   schedule:
+# #     - cron: '*/15 * * * *'   # Every 15 minutes
+
+# # jobs:
+# #   call-reusable-a:
+# #     uses: ./.github/workflows/reusable-a.yml
+# #     with:
+# #       demo: firstcallinggggggg
+
+# #   call-reusable-b:
+# #     uses: ./.github/workflows/reusable-b.yml
+# #     with:
+# #       demo: secondcalling11111111
+
+# #   call-reusable-c:
+# #     uses: ./.github/workflows/reusable-c.yml
+# #     with:
+# #       demo: thirdcalling
+
+# #   call-reusable-d:
+# #     needs: [call-reusable-a, call-reusable-b]
+# #     if: |
+# #       (
+# #         github.event_name == 'schedule' ||
+# #         github.event.inputs.TestLevel == 'Fortified' ||
+# #         github.event.inputs.TestLevel == ''
+# #       ) && needs.call-reusable-a.result == 'success'
+# #     uses: ./.github/workflows/reusable-d.yml
+# #     with:
+# #       demo: thiisfourthcalling
+##############################################################################################
+name: Main Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      TestLevel:
+        description: "Test Level"
+        required: true
+        type: choice
+        default: Fortified
+        options:
+          - Fortified
+          - Deferred
+          - Deficient    
+  schedule:
+    - cron: '*/5 * * * *'   # Every 5 minutes
+
+jobs:
+  print-input:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print TestLevel input
+        run: echo "TestLevel is: ${{ github.event.inputs.TestLevel || 'Fortified' }}"
+
+  call-reusable-a:
+    uses: ./.github/workflows/reusable-a.yml
+    with:
+      demo: firstcallinggggggg
+
+  call-reusable-b:
+    uses: ./.github/workflows/reusable-b.yml
+    with:
+      demo: secondcalling11111111
+
+  call-reusable-c:
+    uses: ./.github/workflows/reusable-c.yml
+    with:
+      demo: thirdcalling
+
+  call-reusable-d:
+    needs: [call-reusable-a, call-reusable-b]
+    if: |
+      github.event_name == 'schedule' ||
+      (
+        (github.event.inputs.TestLevel || 'Fortified') != 'Deficient' &&
+        (
+          (github.event.inputs.TestLevel || 'Fortified') == 'Fortified' && needs.call-reusable-a.result == 'success'
+        )
+      )
+    uses: ./.github/workflows/reusable-d.yml
+    with:
+      demo: thiisfourthcalling
